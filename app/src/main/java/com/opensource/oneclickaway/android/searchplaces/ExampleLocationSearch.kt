@@ -14,7 +14,7 @@ class ExampleLocationSearch : AppCompatActivity() {
 
     lateinit var searchLocationBtn  : Button
 
-    var API_KEY     = "AIzaSyBuVzsoP0X5Tp_7t9HwgYtnNotioUGPb3Q"
+    var API_KEY     = "API_KEY"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

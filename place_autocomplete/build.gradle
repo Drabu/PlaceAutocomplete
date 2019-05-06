@@ -90,3 +90,27 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    bintrayRepo = 'PlaceAutocomplete'
+    bintrayName = 'com.opensource.oneclickaway.android.searchplaces'
+
+    publishedGroupId = 'com.opensource.oneclickaway.android.searchplaces'
+    libraryName = 'PlaceAutocomplete'
+    artifact = 'place_autocomplete' //This artifact name should be the same with library module name
+
+    libraryDescription = 'A powerful library that provides you with places search api'
+
+    siteUrl = 'https://github.com/drabu/PlaceAutocomplete'
+    gitUrl = 'https://github.com/drabu/PlaceAutocomplete'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'drabu'
+    developerName = 'Burhan ud din Drabu'
+    developerEmail = 'burhan.drabu@gmail.com'
+    organization = 'drabu'// if you push to organization's repository.
+    licenseName = 'The Apache Software License, Version 2.0'  //Example for license
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+
+}
