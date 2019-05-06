@@ -10,8 +10,6 @@ import java.util.concurrent.TimeUnit
 object RESTAPIManager {
 
 
-    var API_KEY     = "AIzaSyBuVzsoP0X5Tp_7t9HwgYtnNotioUGPb3Q"
-//                       https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJrTLr-GyuEmsRBfy61i59si0&key=YOUR_API_KEY
     var BASE_URL    = "https://maps.googleapis.com/maps/api/place/"
 
 

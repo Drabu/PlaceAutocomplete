@@ -7,14 +7,14 @@ class SearchPlacesViewModel(application: Application) : AndroidViewModel(applica
 
     var searchPlacesRepo = SearchPlacesRepo()
 
-    fun requestListOfSearchResults(placeHint: String) {
-        searchPlacesRepo.requestListOfSearchResults(placeHint)
+    fun requestListOfSearchResults(placeHint: String, apiKey : String, location : String, radius : String) {
+        searchPlacesRepo.requestListOfSearchResults(placeHint = placeHint, apiKey = apiKey, location = location, radius = radius )
     }
 
     fun getLiveListOfSearchResultsStream() = searchPlacesRepo.getLiveListOfSearchResultsStream()
 
-    fun requestPlaceDetails(placeId : String){
-        searchPlacesRepo.requestPlaceDetails(placeId = placeId)
+    fun requestPlaceDetails(placeId : String, apiKey : String){
+        searchPlacesRepo.requestPlaceDetails(placeId = placeId, apiKey = apiKey)
     }
 
     fun getPlaceDetailsLiveDataStream() = searchPlacesRepo.getPlaceDetailsLiveDataStream()

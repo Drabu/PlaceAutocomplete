@@ -17,10 +17,10 @@ class SearchPlacesRepo {
     private var listOfSearchResults: MutableLiveData<List<PredictionsItem?>> = MutableLiveData()
 
     /** @author @buren ---> {this microservice gets autocomplete results}*/
-    fun requestListOfSearchResults(placeHint: String) {
+    fun requestListOfSearchResults(placeHint: String,  apiKey: String, location : String, radius : String) {
         compositeDisposable.add(
 
-            RESTAPIManager.getInstance().getPlaceResults(placeHint)
+            RESTAPIManager.getInstance().getPlaceResults(placeHint = placeHint,  apiKey = apiKey, location = location, radius = radius)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .map {
@@ -54,12 +54,12 @@ class SearchPlacesRepo {
 
     private var placeDetails: MutableLiveData<PlaceDetails?> = MutableLiveData()
 
-    fun requestPlaceDetails(placeId: String) {
+    fun requestPlaceDetails(placeId: String,  apiKey: String) {
 
 
         compositeDisposable.add(
 
-            RESTAPIManager.getInstance().getPlaceDetailsFromPlaceId(placeId = placeId)
+            RESTAPIManager.getInstance().getPlaceDetailsFromPlaceId(placeId = placeId,  apiKey = apiKey)
                 .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .filter {

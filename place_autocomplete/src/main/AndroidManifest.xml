@@ -3,7 +3,9 @@
           package="com.oneclickaway.opensource.placeautocomplete">
 
     <application>
-        <activity android:name=".ui.SearchPlaceActivity"/>
+        <activity
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                android:name=".ui.SearchPlaceActivity"/>
     </application>
 
 </manifest>

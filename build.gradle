@@ -64,6 +64,7 @@ ext{
     rxBindingVersion        = '2.1.1'
     rxJava                  = '2.2.8'
     rxAndroid               = '2.1.1'
+    carviewVersion         = '28.0.0'
 
 
 
