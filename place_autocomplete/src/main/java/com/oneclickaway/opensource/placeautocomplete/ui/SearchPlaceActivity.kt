@@ -25,17 +25,6 @@ import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner , View.OnClickListener{
-    override fun onClick(p0: View?) {
-
-        when( p0?.id ){
-
-            R.id.backImageBtn -> {
-               onBackPressed()
-            }
-
-        }
-
-    }
 
     lateinit var viewModel: SearchPlacesViewModel
 
@@ -106,8 +95,6 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner , View.OnCl
                 binding.searchTitleTV.text = intent.extras?.getString(StatusCodes.SEARCH_TITLE, getString(R.string.search_title))
 
             }
-
-
 
 
         } else {
@@ -213,5 +200,17 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner , View.OnCl
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out)
+    }
+
+    override fun onClick(p0: View?) {
+
+        when( p0?.id ){
+
+            R.id.backImageBtn -> {
+                onBackPressed()
+            }
+
+        }
+
     }
 }

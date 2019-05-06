@@ -1,4 +1,4 @@
-package com.uipep.android.searchplaces
+package com.opensource.oneclickaway.android.searchplaces
 
 import org.junit.Test
 
