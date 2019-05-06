@@ -8,6 +8,7 @@ import com.oneclickaway.opensource.placeautocomplete.api.bean.places_response.Pr
 import com.oneclickaway.opensource.placeautocomplete.databinding.SearchResultRowBinding
 import com.oneclickaway.opensource.placeautocomplete.interfaces.PlaceClickListerner
 
+/** @author @buren ---> {adapter to set result views in row}*/
 class SearchResultAdapter(
     var listOfCandidatesItem: List<PredictionsItem?>? = ArrayList(),
     var placeClickListerner: PlaceClickListerner
@@ -31,11 +32,14 @@ class SearchResultAdapter(
     }
 
 
+    /** @author @buren ---> {sets items in view}*/
     fun setSearchCandidates(listOfCandidatesItem: List<PredictionsItem?>?) {
         this.listOfCandidatesItem = listOfCandidatesItem
         notifyDataSetChanged()
     }
 
+
+    /** @author @buren ---> {holds row vew}*/
     class ViewHolder(
         var listOfCandidatesItem: List<PredictionsItem?>?,
         var binding: SearchResultRowBinding,

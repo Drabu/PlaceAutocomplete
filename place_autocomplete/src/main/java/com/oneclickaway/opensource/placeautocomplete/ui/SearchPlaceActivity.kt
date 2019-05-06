@@ -15,7 +15,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.oneclickaway.opensource.placeautocomplete.R
 import com.oneclickaway.opensource.placeautocomplete.api.bean.places_response.PredictionsItem
 import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesViewModel
-import com.oneclickaway.opensource.placeautocomplete.components.StatusCodes
+import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesStatusCodes
 import com.oneclickaway.opensource.placeautocomplete.databinding.ActivitySearchPlaceBinding
 import com.oneclickaway.opensource.placeautocomplete.interfaces.PlaceClickListerner
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,24 +24,17 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner , View.OnClickListener{
+/** @author @buren ---> {This activity will take care of picking the place and returning back the response}*/
+class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnClickListener {
 
-    lateinit var viewModel: SearchPlacesViewModel
-
-
+    private lateinit var viewModel: SearchPlacesViewModel
     private lateinit var binding: ActivitySearchPlaceBinding
+    private var compositeDisposable = CompositeDisposable()
+    private lateinit var searchListAdapter: SearchResultAdapter
 
-
-    var compositeDisposable = CompositeDisposable()
-
-    lateinit var searchListAdapter: SearchResultAdapter
-
-
-    var API_KEY: String? = null
-
-    var LOCATION: String? = null
-
-    var ENCLOSING_RADIUS: String? = null
+    private var apiKey: String? = null
+    private var location: String? = null
+    private var enclosingRadius: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +44,6 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner , View.OnCl
         initializeDependency()
 
         setViewModel()
-
 
         setOnClickListeners()
 
@@ -68,31 +60,32 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner , View.OnCl
     }
 
     private fun initializeDependency() {
-        if (intent.hasExtra(StatusCodes.GOOGLE_API_KEY)) {
-            API_KEY = intent.extras?.getString(StatusCodes.GOOGLE_API_KEY, "na")
+        if (intent.hasExtra(SearchPlacesStatusCodes.GOOGLE_API_KEY)) {
+            apiKey = intent.extras?.getString(SearchPlacesStatusCodes.GOOGLE_API_KEY, "na")
             Log.d(javaClass.simpleName, "initializeDependency: api key")
 
-            if (intent.hasExtra(StatusCodes.CURRENT_LOCATION)) {
-                LOCATION = intent.extras?.getString(StatusCodes.CURRENT_LOCATION, "na")
+            if (intent.hasExtra(SearchPlacesStatusCodes.CURRENT_LOCATION)) {
+                location = intent.extras?.getString(SearchPlacesStatusCodes.CURRENT_LOCATION, "na")
                 Log.d(
                     javaClass.simpleName,
                     "initializeDependency: init Location " + intent.extras?.getString(
-                        StatusCodes.CURRENT_LOCATION,
+                        SearchPlacesStatusCodes.CURRENT_LOCATION,
                         "na"
                     )
                 )
             }
 
-            if (intent.hasExtra(StatusCodes.ENCLOSE_RADIUS)) {
-                ENCLOSING_RADIUS = intent.extras?.getString(StatusCodes.ENCLOSE_RADIUS, "na")
+            if (intent.hasExtra(SearchPlacesStatusCodes.ENCLOSE_RADIUS)) {
+                enclosingRadius = intent.extras?.getString(SearchPlacesStatusCodes.ENCLOSE_RADIUS, "na")
                 Log.d(
                     javaClass.simpleName,
-                    "initializeDependency: init radius" + intent.extras?.getString(StatusCodes.ENCLOSE_RADIUS, "na")
+                    "initializeDependency: init radius" + intent.extras?.getString(SearchPlacesStatusCodes.ENCLOSE_RADIUS, "na")
                 )
             }
 
-            if (intent.hasExtra(StatusCodes.SEARCH_TITLE)) {
-                binding.searchTitleTV.text = intent.extras?.getString(StatusCodes.SEARCH_TITLE, getString(R.string.search_title))
+            if (intent.hasExtra(SearchPlacesStatusCodes.SEARCH_TITLE)) {
+                binding.searchTitleTV.text =
+                    intent.extras?.getString(SearchPlacesStatusCodes.SEARCH_TITLE, getString(R.string.search_title))
 
             }
 
@@ -118,7 +111,7 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner , View.OnCl
             binding.searchProgressBar.visibility = View.GONE
             Log.d(javaClass.simpleName, "attachLiveObservers:  ${it?.geometry?.location?.lat} $it ")
             val resultData = Intent()
-            resultData.putExtra(StatusCodes.PLACE_DATA, it)
+            resultData.putExtra(SearchPlacesStatusCodes.PLACE_DATA, it)
             setResult(Activity.RESULT_OK, resultData)
             finish()
             overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out)
@@ -159,9 +152,9 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner , View.OnCl
                         binding.searchProgressBar.visibility = View.VISIBLE
                         viewModel.requestListOfSearchResults(
                             placeHint = t.toString(),
-                            apiKey = API_KEY!!,
-                            location = LOCATION ?: "",
-                            radius = ENCLOSING_RADIUS ?: "500"
+                            apiKey = apiKey!!,
+                            location = location ?: "",
+                            radius = enclosingRadius ?: "500"
                         )
 
                     }
@@ -175,7 +168,6 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner , View.OnCl
 
     }
 
-
     private fun setRecyclerView() {
 
         binding.searchResultsRV.layoutManager = LinearLayoutManager(this)
@@ -187,7 +179,7 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner , View.OnCl
     override fun onPlaceClicked(candidateItem: PredictionsItem?) {
 
         binding.searchProgressBar.visibility = View.VISIBLE
-        viewModel.requestPlaceDetails(candidateItem?.placeId.toString(), apiKey = API_KEY!!)
+        viewModel.requestPlaceDetails(candidateItem?.placeId.toString(), apiKey = apiKey!!)
     }
 
     override fun onDestroy() {
@@ -196,7 +188,6 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner , View.OnCl
         compositeDisposable.clear()
     }
 
-
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out)
@@ -204,7 +195,7 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner , View.OnCl
 
     override fun onClick(p0: View?) {
 
-        when( p0?.id ){
+        when (p0?.id) {
 
             R.id.backImageBtn -> {
                 onBackPressed()

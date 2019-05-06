@@ -6,8 +6,9 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.uipep.android.searchplaces"
+        applicationId "com.opensource.oneclickaway.android.searchplaces"
         minSdkVersion 15
+
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

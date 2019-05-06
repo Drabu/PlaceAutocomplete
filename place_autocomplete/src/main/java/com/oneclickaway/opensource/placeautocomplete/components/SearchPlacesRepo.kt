@@ -9,18 +9,23 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
+/** @author @buren ---> {REST Service repository}*/
 class SearchPlacesRepo {
 
-    var compositeDisposable = CompositeDisposable()
-
+    private var compositeDisposable = CompositeDisposable()
 
     private var listOfSearchResults: MutableLiveData<List<PredictionsItem?>> = MutableLiveData()
 
-    /** @author @buren ---> {this microservice gets autocomplete results}*/
-    fun requestListOfSearchResults(placeHint: String,  apiKey: String, location : String, radius : String) {
+    /** @author @buren ---> {this micro-service gets autocomplete results}*/
+    fun requestListOfSearchResults(placeHint: String, apiKey: String, location: String, radius: String) {
         compositeDisposable.add(
 
-            RESTAPIManager.getInstance().getPlaceResults(placeHint = placeHint,  apiKey = apiKey, location = location, radius = radius)
+            RESTAPIManager.getInstance().getPlaceResults(
+                placeHint = placeHint,
+                apiKey = apiKey,
+                location = location,
+                radius = radius
+            )
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .map {
@@ -46,24 +51,22 @@ class SearchPlacesRepo {
 
     }
 
+    /** @author @buren ---> {micro-service used to get live data stream of search results}*/
     fun getLiveListOfSearchResultsStream(): LiveData<List<PredictionsItem?>> = listOfSearchResults
-
-
-
-
 
     private var placeDetails: MutableLiveData<PlaceDetails?> = MutableLiveData()
 
-    fun requestPlaceDetails(placeId: String,  apiKey: String) {
+    /** @author @buren ---> {micro-service used to get place details}*/
+    fun requestPlaceDetails(placeId: String, apiKey: String) {
 
 
         compositeDisposable.add(
 
-            RESTAPIManager.getInstance().getPlaceDetailsFromPlaceId(placeId = placeId,  apiKey = apiKey)
+            RESTAPIManager.getInstance().getPlaceDetailsFromPlaceId(placeId = placeId, apiKey = apiKey)
                 .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .filter {
-                    it.status.equals(StatusCodes.GOOGLE_SEARCH_RESULT_OK)
+                    it.status.equals(SearchPlacesStatusCodes.GOOGLE_SEARCH_RESULT_OK)
                 }.map {
                     it.result
                 }.subscribe {
@@ -73,8 +76,10 @@ class SearchPlacesRepo {
 
     }
 
-    fun getPlaceDetailsLiveDataStream() : LiveData<PlaceDetails?> = placeDetails
+    /** @author @buren ---> {micro-service used to get live data stream of place details}*/
+    fun getPlaceDetailsLiveDataStream(): LiveData<PlaceDetails?> = placeDetails
 
+    /** @author @buren ---> {used to clear subscribers}*/
     fun clear() {
         compositeDisposable.clear()
     }

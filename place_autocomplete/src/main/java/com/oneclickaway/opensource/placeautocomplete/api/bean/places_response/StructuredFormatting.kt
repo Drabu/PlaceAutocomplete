@@ -2,6 +2,7 @@ package com.oneclickaway.opensource.placeautocomplete.api.bean.places_response
 
 import com.google.gson.annotations.SerializedName
 
+/** @author @buren ---> {Google response for predicted places}*/
 data class StructuredFormatting(
 
 	@field:SerializedName("main_text_matched_substrings")

@@ -15,6 +15,7 @@ import org.junit.Assert.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+    /** @author @buren ---> {sample test case}*/
     @Test
     fun useAppContext() {
         // Context of the app under test.
