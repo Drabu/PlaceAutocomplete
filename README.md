@@ -36,7 +36,8 @@ Add it in your root build.gradle at the end of repositories:
 Add the dependency: 
 
     dependencies {
-		implementation 'com.github.Drabu:PlaceAutocomplete:1.0.0'
+    		//copy the version from jitpack badge	
+		implementation 'com.github.Drabu:PlaceAutocomplete:x.x.x'
 	 }
 
 Mandatory Field: 
@@ -98,7 +99,7 @@ Usage
 
 License
 -----
-	MIT License
+	APACHE License
 
 	Copyright (c) 2019 Burhan ud din Drabu
 
