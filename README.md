@@ -42,20 +42,20 @@ Add the dependency:
 Mandatory Field: 
         
  	  val intent =  Intent(this,  SearchPlaceActivity::class.java)
-      intent.putExtra(StatusCodes.GOOGLE_API_KEY, "API_KEY")
+      intent.putExtra(SearchPlacesStatusCodes.GOOGLE_API_KEY, "API_KEY")
 	
 Optional parameteres: 
         
-     intent.putExtra(StatusCodes.SEARCH_TITLE,  "Enter pickup location")
-     intent.putExtra(StatusCodes.CURRENT_LOCATION, "12.885970,77.656181")
-     intent.putExtra(StatusCodes.ENCLOSE_RADIUS, "500")
+     intent.putExtra(SearchPlacesStatusCodes.SEARCH_TITLE,  "Enter pickup location")
+     intent.putExtra(SearchPlacesStatusCodes.CURRENT_LOCATION, "12.885970,77.656181")
+     intent.putExtra(SearchPlacesStatusCodes.ENCLOSE_RADIUS, "500")
 
 
 
 #Example Kotlin Class: 
 
     import com.oneclickaway.opensource.placeautocomplete.api.bean.place_details.PlaceDetails
-    import com.oneclickaway.opensource.placeautocomplete.components.StatusCodes
+    import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesStatusCodes
     import com.oneclickaway.opensource.placeautocomplete.ui.SearchPlaceActivity
     
     class ExampleLocationSearch : AppCompatActivity() {
