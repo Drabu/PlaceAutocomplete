@@ -13,7 +13,7 @@ You can provide your own custom title message for the view
 
 You can also provide your current location and radius for location based results
 
-This Kotlin Library is build with MVVM Archetecture and runs on top of RxJava 2. The library uses Rx debounce operator to reduce network calls and supports landscape orientation   
+This Kotlin Library is build with MVVM Archetecture and runs on top of RxJava 2. The library uses various Rx operators like debounce, throttlefirst operators to reduce network calls and supports landscape orientation   
 
 
 ### How it works
@@ -133,6 +133,7 @@ For build version greater LOLLIPOP, you can use Activity Transition like this:
 Usage
 -----
 -Minimum sdk 15
+-Returns place information in onActivityResult
 
 License
 -----
