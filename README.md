@@ -18,7 +18,7 @@ This Kotlin Library is build with MVVM Archetecture and runs on top of RxJava 2.
 ### How it works
 
 <p align="center">
-    <img src="demo.gif" alt="Demonstartion image."/>
+    <img src="dry_run.gif" alt="Demonstartion image."/>
 </p>
 
 Configuration
