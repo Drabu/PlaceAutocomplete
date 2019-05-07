@@ -19,5 +19,9 @@ object SearchPlacesStatusCodes {
     /** @author @buren ---> {Used to check if data is in correct form}*/
     val GOOGLE_SEARCH_RESULT_OK = "OK"
 
+    val PLACEHOLDER_TRANSITION = "searchPlaceHolder"
+
+    val CONFIG = "configuration"
+
 
 }

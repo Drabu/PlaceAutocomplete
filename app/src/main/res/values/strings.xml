@@ -3,5 +3,6 @@
     <string name="enter_location_name">Enter location name</string>
     <string name="sample_place">Sample Place</string>
     <string name="sample_place_formatted_address">Sample place formatted address</string>
-    <string name="enter_location">Enter Location</string>
+    <string name="enter_location">Search for a landmark or locality</string>
+    <string name="enter_some_location">Enter some location</string>
 </resources>

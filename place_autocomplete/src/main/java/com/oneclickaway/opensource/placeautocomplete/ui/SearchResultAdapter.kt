@@ -1,12 +1,16 @@
 package com.oneclickaway.opensource.placeautocomplete.ui
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import com.jakewharton.rxbinding2.view.RxView
 import com.oneclickaway.opensource.placeautocomplete.api.bean.places_response.PredictionsItem
 import com.oneclickaway.opensource.placeautocomplete.databinding.SearchResultRowBinding
 import com.oneclickaway.opensource.placeautocomplete.interfaces.PlaceClickListerner
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 /** @author @buren ---> {adapter to set result views in row}*/
 class SearchResultAdapter(
@@ -27,7 +31,8 @@ class SearchResultAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.binding.placeTitleTV.text = listOfCandidatesItem?.get(position)?.structuredFormatting?.mainText
-        holder.binding.placeFormattedAddressTV.text = listOfCandidatesItem?.get(position)?.structuredFormatting?.secondaryText
+        holder.binding.placeFormattedAddressTV.text =
+            listOfCandidatesItem?.get(position)?.structuredFormatting?.secondaryText
 
     }
 
@@ -44,16 +49,20 @@ class SearchResultAdapter(
         var listOfCandidatesItem: List<PredictionsItem?>?,
         var binding: SearchResultRowBinding,
         var placeClickListerner: PlaceClickListerner
-    ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener(this)
+            setItemClickListener()
         }
 
-        override fun onClick(p0: View) {
-            placeClickListerner.onPlaceClicked(listOfCandidatesItem?.get(adapterPosition))
+        @SuppressLint("CheckResult")
+        private fun setItemClickListener() {
+            RxView.clicks(binding.root)
+                .throttleFirst(700, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    placeClickListerner.onPlaceClicked(listOfCandidatesItem?.get(adapterPosition))
+                }
         }
-
     }
 
 }

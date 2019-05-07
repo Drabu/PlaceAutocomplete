@@ -5,7 +5,9 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -14,14 +16,15 @@ import android.widget.Toast
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.oneclickaway.opensource.placeautocomplete.R
 import com.oneclickaway.opensource.placeautocomplete.api.bean.places_response.PredictionsItem
-import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesViewModel
 import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesStatusCodes
+import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesViewModel
 import com.oneclickaway.opensource.placeautocomplete.databinding.ActivitySearchPlaceBinding
 import com.oneclickaway.opensource.placeautocomplete.interfaces.PlaceClickListerner
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.parcel.Parcelize
 import java.util.concurrent.TimeUnit
 
 /** @author @buren ---> {This activity will take care of picking the place and returning back the response}*/
@@ -60,37 +63,18 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
     }
 
     private fun initializeDependency() {
-        if (intent.hasExtra(SearchPlacesStatusCodes.GOOGLE_API_KEY)) {
-            apiKey = intent.extras?.getString(SearchPlacesStatusCodes.GOOGLE_API_KEY, "na")
-            Log.d(javaClass.simpleName, "initializeDependency: api key")
 
-            if (intent.hasExtra(SearchPlacesStatusCodes.CURRENT_LOCATION)) {
-                location = intent.extras?.getString(SearchPlacesStatusCodes.CURRENT_LOCATION, "na")
-                Log.d(
-                    javaClass.simpleName,
-                    "initializeDependency: init Location " + intent.extras?.getString(
-                        SearchPlacesStatusCodes.CURRENT_LOCATION,
-                        "na"
-                    )
-                )
-            }
 
-            if (intent.hasExtra(SearchPlacesStatusCodes.ENCLOSE_RADIUS)) {
-                enclosingRadius = intent.extras?.getString(SearchPlacesStatusCodes.ENCLOSE_RADIUS, "na")
-                Log.d(
-                    javaClass.simpleName,
-                    "initializeDependency: init radius" + intent.extras?.getString(SearchPlacesStatusCodes.ENCLOSE_RADIUS, "na")
-                )
-            }
+        if (intent.hasExtra(SearchPlacesStatusCodes.CONFIG)) {
 
-            if (intent.hasExtra(SearchPlacesStatusCodes.SEARCH_TITLE)) {
-                binding.searchTitleTV.text =
-                    intent.extras?.getString(SearchPlacesStatusCodes.SEARCH_TITLE, getString(R.string.search_title))
-
-            }
-
+            val configuration = intent.extras?.getParcelable<Config>(SearchPlacesStatusCodes.CONFIG)
+            apiKey = configuration?.apiKey
+            location = configuration?.location
+            enclosingRadius = configuration?.enclosingRadius
+            binding.searchTitleTV.text = configuration?.searchBarTitle
 
         } else {
+            /*finish*/
             Toast.makeText(this, "Please mention the api key in put-extra", Toast.LENGTH_LONG).show()
             finish()
         }
@@ -103,6 +87,18 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
             /*refresh the adapter here*/
             binding.searchProgressBar.visibility = View.GONE
             searchListAdapter.setSearchCandidates(it)
+            if (it?.size == 0) {
+                if (binding.placeNamET.text.toString().isNotEmpty()) {
+                    binding.noPlacesFoundLL.visibility = View.VISIBLE
+                    Log.i(javaClass.simpleName, "attachLiveObservers: List is empty!")
+                } else {
+                    binding.noPlacesFoundLL.visibility = View.GONE
+                }
+
+            } else {
+                binding.noPlacesFoundLL.visibility = View.GONE
+                Log.i(javaClass.simpleName, "attachLiveObservers: List has contents!")
+            }
         })
 
 
@@ -113,8 +109,14 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
             val resultData = Intent()
             resultData.putExtra(SearchPlacesStatusCodes.PLACE_DATA, it)
             setResult(Activity.RESULT_OK, resultData)
-            finish()
-            overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out)
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                finishAfterTransition()
+            } else {
+                finish()
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out)
+            }
 
         })
 
@@ -204,4 +206,21 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
         }
 
     }
+
+    /** @author @buren ---> {Configuration class for Search places}
+     *
+     * @param apiKey This is a mandatory field which is used to query google places api
+     * @param enclosingRadius (radius in meters from current location) This is an optional field which is required to search a location within a specific radius
+     * @param location You can pass your location which sorts the list as per your nearest location
+     * @param searchBarTitle This can be used to set title for search activity
+     *
+     * */
+    @Parcelize
+    class Config(
+        var apiKey: String,
+        var location: String = "",
+        var enclosingRadius: String = "",
+        var searchBarTitle: String = "Enter Location"
+    ) : Parcelable
+
 }
