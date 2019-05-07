@@ -4,7 +4,7 @@ Google Places Api Implementation
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/34c0864ec96f4ce8a094a60d040e7ff7)](https://www.codacy.com/app/Drabu/PlaceAutocomplete?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Drabu/PlaceAutocomplete&amp;utm_campaign=Badge_Grade)
 [![](https://jitpack.io/v/Drabu/PlaceAutocomplete.svg)](https://jitpack.io/#Drabu/PlaceAutocomplete)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 After Google came up with the update that Play Services version of the Places SDK for Android (in Google Play Services 16.0.0) is deprecated as of January 29, 2019, and will be turned off on July 29, 2019.
 which includes PlaceAutoComplete also to be removed from the library.I was using the same in our client project but after getting this news we had to immidiately switch to an alternative where i endded up creating this library,  PlacesAutocomplete provides you with an elegant user interface to choose a location and works the exact same as PlaceAutoComplete.
@@ -99,9 +99,9 @@ Usage
 
 License
 -----
-	APACHE License
+	MIT License
 
-	Copyright (c) 2019 Burhan ud din Drabu
+	Copyright (c) 2019 Burhan ud din
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -120,4 +120,4 @@ License
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
-	
+
