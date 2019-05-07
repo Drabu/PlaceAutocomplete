@@ -15,6 +15,7 @@ You can also provide your current location and radius for location based results
 
 This Kotlin Library is build with MVVM Archetecture and runs on top of RxJava 2. The library uses Rx debounce operator to reduce network calls and supports landscape orientation   
 
+
 ### How it works
 
 <p align="center">
@@ -42,15 +43,31 @@ Add the dependency:
 
 Mandatory Field: 
         
- 	  val intent =  Intent(this,  SearchPlaceActivity::class.java)
-      intent.putExtra(SearchPlacesStatusCodes.GOOGLE_API_KEY, "API_KEY")
+        val intent = Intent(this, SearchPlaceActivity::class.java)
+        intent.putExtra(
+            SearchPlacesStatusCodes.CONFIG,
+            SearchPlaceActivity.Config(apiKey = API_KEY)
+        )
 	
 Optional parameteres: 
         
-     intent.putExtra(SearchPlacesStatusCodes.SEARCH_TITLE,  "Enter pickup location")
-     intent.putExtra(SearchPlacesStatusCodes.CURRENT_LOCATION, "12.885970,77.656181")
-     intent.putExtra(SearchPlacesStatusCodes.ENCLOSE_RADIUS, "500")
+    val intent = Intent(this, SearchPlaceActivity::class.java)
+        intent.putExtra(
+            SearchPlacesStatusCodes.CONFIG,
+            SearchPlaceActivity.Config(
+                apiKey = API_KEY,
+                searchBarTitle = "Enter Source Location",
+                location = "12.9716,77.5946",
+                enclosingRadius = "500"
+            )
+        )
 
+
+For build version greater LOLLIPOP, you can use Activity Transition like this: 
+
+	val pair = Pair.create(searchLocationET as View, SearchPlacesStatusCodes.PLACEHOLDER_TRANSITION)
+	val options = ActivityOptions.makeSceneTransitionAnimation(this, pair).toBundle()
+	startActivityForResult(intent, 700, options)
 
 
 #Example Kotlin Class: 
@@ -58,40 +75,60 @@ Optional parameteres:
     import com.oneclickaway.opensource.placeautocomplete.api.bean.place_details.PlaceDetails
     import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesStatusCodes
     import com.oneclickaway.opensource.placeautocomplete.ui.SearchPlaceActivity
-    
+
     class ExampleLocationSearch : AppCompatActivity() {
 
-    lateinit var searchLocationBtn  : Button
+     lateinit var searchLocationET: EditText
+     lateinit var placeDetailsTV: TextView
+     var REQUEST_CODE = 700
 
-    var API_KEY     = "API_KEY"
+     var API_KEY = BuildConfig.ApiKey
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_example_location_search)
 
-        searchLocationBtn = findViewById(R.id.searchLocationBTN)
+        searchLocationET = findViewById(R.id.searchLocationBTN)
+        placeDetailsTV = findViewById(R.id.resultPlaceDetailsTV)
 
-        val intent =  Intent(this,  SearchPlaceActivity::class.java)
-        intent.putExtra(SearchPlacesStatusCodes.GOOGLE_API_KEY, API_KEY)
-        //intent.putExtra(SearchPlacesStatusCodes.SEARCH_TITLE,  "Enter pickup location")
-        //intent.putExtra(SearchPlacesStatusCodes.CURRENT_LOCATION, "12.885970,77.656181")
-        //intent.putExtra(SearchPlacesStatusCodes.ENCLOSE_RADIUS, "500")
+        val intent = Intent(this, SearchPlaceActivity::class.java)
+        intent.putExtra(
+            SearchPlacesStatusCodes.CONFIG,
+            SearchPlaceActivity.Config(apiKey = API_KEY, searchBarTitle = "Enter Source Location")
+        )
 
-        searchLocationBtn.setOnClickListener{
-            startActivityForResult(intent,  700)
-            overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out)
+        searchLocationET.setOnClickListener {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val pair = Pair.create(searchLocationET as View, SearchPlacesStatusCodes.PLACEHOLDER_TRANSITION)
+                val options = ActivityOptions.makeSceneTransitionAnimation(this, pair).toBundle()
+                startActivityForResult(intent, REQUEST_CODE, options)
+
+            } else {
+                startActivityForResult(intent, REQUEST_CODE)
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out)
+            }
+
+
         }
+
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 700 && resultCode == Activity.RESULT_OK){
-            val placeDetails = data?.getParcelableExtra<PlaceDetails>(StatusCodes.PLACE_DATA)
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+            val placeDetails = data?.getParcelableExtra<PlaceDetails>(SearchPlacesStatusCodes.PLACE_DATA)
+
+            searchLocationET.setText(placeDetails?.name)
+
+            placeDetailsTV.text = placeDetails.toString()
+            Log.i(javaClass.simpleName, "onActivityResult: ${placeDetails}  ")
         }
     }
-  }
+    }
    
 Usage
 -----
