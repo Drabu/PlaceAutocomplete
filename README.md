@@ -9,11 +9,15 @@ Google Places Api Implementation
 After Google came up with the update that Play Services version of the Places SDK for Android (in Google Play Services 16.0.0) is deprecated as of January 29, 2019, and will be turned off on July 29, 2019.
 which includes PlaceAutoComplete also to be removed from the library.After getting this update from google we had to immidiately switch to an alternative where i endded up creating this library,  PlacesAutocomplete provides you with an elegant user interface to choose a location and works the exact same as PlaceAutoComplete.
 
-### Featuers
+### Features
 Custom title message for the view.
+
 Sorted places based on your location provided you pass your location.
+
 Radius of eclosure for search
+
 Support for activity animation for a smooth transition
+
 Suupport for landscape orientation.
 
 This Kotlin Library is build with MVVM Archetecture and runs on top of RxJava 2. The library uses various Rx operators like debounce, throttlefirst operators to reduce network calls and supports landscape orientation   
