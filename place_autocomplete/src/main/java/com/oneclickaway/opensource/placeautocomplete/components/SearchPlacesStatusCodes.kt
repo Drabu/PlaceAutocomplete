@@ -1,6 +1,6 @@
 package com.oneclickaway.opensource.placeautocomplete.components
 /** @author @buren ---> {file contains library constants}*/
-object SearchPlacesStatusCodes {
+ object SearchPlacesStatusCodes {
     /** @author @buren ---> {Use this constant to set title for search places activity}*/
     val SEARCH_TITLE: String? = "searchTitle"
 

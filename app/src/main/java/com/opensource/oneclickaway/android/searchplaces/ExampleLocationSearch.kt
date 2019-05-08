@@ -20,7 +20,8 @@ class ExampleLocationSearch : AppCompatActivity() {
     lateinit var searchLocationET: EditText
     lateinit var placeDetailsTV: TextView
 
-    var API_KEY = "AIzaSyBuVzsoP0X5Tp_7t9HwgYtnNotioUGPb3Q"
+
+    var API_KEY = "API KEY"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
