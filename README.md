@@ -8,7 +8,6 @@ Google Places Api Implementation
 
 After Google came up with the update that Play Services version of the Places SDK for Android (in Google Play Services 16.0.0) is deprecated as of January 29, 2019, and will be turned off on July 29, 2019.
 which includes PlaceAutoComplete also to be removed from the library.After getting this update from google we had to immidiately switch to an alternative where i endded up creating this library,  PlacesAutocomplete provides you with an elegant user interface to choose a location and works the exact same as PlaceAutoComplete.
-
 ### Features
 Custom title message for the view.
 
@@ -31,7 +30,6 @@ This Kotlin Library is build with MVVM Archetecture and runs on top of RxJava 2.
 
 Configuration
 -------------
-
 
 Add it in your root build.gradle at the end of repositories:
     
@@ -75,8 +73,6 @@ For build version greater LOLLIPOP, you can use Activity Transition like this:
 	val pair = Pair.create(searchLocationET as View, SearchPlacesStatusCodes.PLACEHOLDER_TRANSITION)
 	val options = ActivityOptions.makeSceneTransitionAnimation(this, pair).toBundle()
 	startActivityForResult(intent, 700, options)
-
-
 #Example Kotlin Class: 
 
     import com.oneclickaway.opensource.placeautocomplete.api.bean.place_details.PlaceDetails
@@ -165,4 +161,3 @@ License
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
-
