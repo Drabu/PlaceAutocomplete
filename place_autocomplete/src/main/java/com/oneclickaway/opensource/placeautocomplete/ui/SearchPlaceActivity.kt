@@ -1,31 +1,18 @@
 package com.oneclickaway.opensource.placeautocomplete.ui
 
-import android.app.Activity
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
-import android.databinding.DataBindingUtil
-import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.jakewharton.rxbinding2.widget.RxTextView
 import com.oneclickaway.opensource.placeautocomplete.R
 import com.oneclickaway.opensource.placeautocomplete.api.bean.places_response.PredictionsItem
 import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesStatusCodes
 import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesViewModel
-import com.oneclickaway.opensource.placeautocomplete.databinding.ActivitySearchPlaceBinding
 import com.oneclickaway.opensource.placeautocomplete.interfaces.PlaceClickListerner
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.parcel.Parcelize
-import java.util.concurrent.TimeUnit
 
 /** @author @buren ---> {This activity will take care of picking the place and returning back the response}*/
 class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnClickListener {
