@@ -14,7 +14,7 @@ import android.widget.TextView
 import com.oneclickaway.opensource.placeautocomplete.api.bean.place_details.PlaceDetails
 import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesStatusCodes
 import com.oneclickaway.opensource.placeautocomplete.ui.SearchPlaceActivity
-
+/** @author @buren ---> {Sample activity taht implements the feature}*/
 class ExampleLocationSearch : AppCompatActivity() {
 
     lateinit var searchLocationET: EditText
@@ -32,7 +32,12 @@ class ExampleLocationSearch : AppCompatActivity() {
         val intent = Intent(this, SearchPlaceActivity::class.java)
         intent.putExtra(
             SearchPlacesStatusCodes.CONFIG,
-            SearchPlaceActivity.Config(apiKey = API_KEY, searchBarTitle = "Enter Source Location")
+            SearchPlaceActivity.Config(
+                apiKey = API_KEY,
+                searchBarTitle = "Enter Source Location",
+                location = "12.9716,77.5946",
+                enclosingRadius = "500"
+            )
         )
 
         searchLocationET.setOnClickListener {

@@ -15,7 +15,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+//        buildConfigField("String", "ApiKey", "")
+//        buildConfigField 'String', "ApiKey", MyAwesomeApp_ApiKey
         release {
+//            buildConfigField("String", "ApiKey", MyAwesomeApp_ApiKey)
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
