@@ -20,7 +20,7 @@ Support for activity animation for a smooth transition
 
 Suupport for landscape orientation.
 
-This Kotlin Library is build with MVVM Archetecture and runs on top of RxJava 2. The library uses various Rx operators like debounce, throttlefirst operators to reduce network calls and supports landscape orientation   
+This Kotlin Library is build with MVVM Archetecture and runs on top of RxJava 2. The library uses various Rx operators like debounce, throttlefirst operators to reduce network calls and optimze location query.
 
 
 ### How it works
