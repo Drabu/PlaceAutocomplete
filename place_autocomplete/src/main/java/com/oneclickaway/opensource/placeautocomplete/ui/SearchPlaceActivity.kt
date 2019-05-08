@@ -29,9 +29,12 @@ import java.util.concurrent.TimeUnit
 
 /** @author @buren ---> {This activity will take care of picking the place and returning back the response}*/
 class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnClickListener {
+    override fun onPlaceClicked(candidateItem: PredictionsItem?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private lateinit var viewModel: SearchPlacesViewModel
-    private lateinit var binding: ActivitySearchPlaceBinding
+//    private lateinit var binding: ActivitySearchPlaceBinding
     private var compositeDisposable = CompositeDisposable()
     private lateinit var searchListAdapter: SearchResultAdapter
 
@@ -42,7 +45,8 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_search_place)
+        setContentView(R.layout.activity_search_place)
+//        binding = DataBindingUtil.setContentView(this, R.layout.activity_search_place)
 
         initializeDependency()
 
@@ -50,16 +54,16 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
 
         setOnClickListeners()
 
-        setRecyclerView()
+        /*setRecyclerView()*/
 
-        setOnQueryChangeListener()
-
-        attachLiveObservers()
+//        setOnQueryChangeListener()
+//
+//        attachLiveObservers()
 
     }
 
     private fun setOnClickListeners() {
-        binding.backImageBtn.setOnClickListener(this)
+//        binding.backImageBtn.setOnClickListener(this)
     }
 
     private fun initializeDependency() {
@@ -71,7 +75,7 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
             apiKey = configuration?.apiKey
             location = configuration?.location
             enclosingRadius = configuration?.enclosingRadius
-            binding.searchTitleTV.text = configuration?.searchBarTitle
+//            binding.searchTitleTV.text = configuration?.searchBarTitle
 
         } else {
             /*finish*/
@@ -81,10 +85,10 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
 
     }
 
-    private fun attachLiveObservers() {
+  /*  private fun attachLiveObservers() {
 
         viewModel.getLiveListOfSearchResultsStream().observe(this, Observer {
-            /*refresh the adapter here*/
+            *//*refresh the adapter here*//*
             binding.searchProgressBar.visibility = View.GONE
             searchListAdapter.setSearchCandidates(it)
             if (it?.size == 0) {
@@ -120,13 +124,21 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
 
         })
 
-    }
+    }*/
 
     private fun setViewModel() {
         viewModel = ViewModelProviders.of(this).get(SearchPlacesViewModel::class.java)
     }
 
-    private fun setOnQueryChangeListener() {
+    /*private fun setRecyclerView() {
+
+        binding.searchResultsRV.layoutManager = LinearLayoutManager(this)
+        searchListAdapter = SearchResultAdapter(placeClickListerner = this)
+        binding.searchResultsRV.adapter = searchListAdapter
+
+    }*/
+
+    /*private fun setOnQueryChangeListener() {
 
         compositeDisposable.add(
 
@@ -168,21 +180,13 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
                 })
         )
 
-    }
+    }*/
 
-    private fun setRecyclerView() {
-
-        binding.searchResultsRV.layoutManager = LinearLayoutManager(this)
-        searchListAdapter = SearchResultAdapter(placeClickListerner = this)
-        binding.searchResultsRV.adapter = searchListAdapter
-
-    }
-
-    override fun onPlaceClicked(candidateItem: PredictionsItem?) {
+    /*override fun onPlaceClicked(candidateItem: PredictionsItem?) {
 
         binding.searchProgressBar.visibility = View.VISIBLE
         viewModel.requestPlaceDetails(candidateItem?.placeId.toString(), apiKey = apiKey!!)
-    }
+    }*/
 
     override fun onDestroy() {
         super.onDestroy()
