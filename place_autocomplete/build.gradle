@@ -18,10 +18,7 @@ android {
     }
 
 
-    androidExtensions {
-        experimental = true
-        features = ["parcelize"]
-    }
+
 
     buildTypes {
 //        buildConfigField("String", "ApiKey", "")
