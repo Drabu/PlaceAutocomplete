@@ -1,58 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" >
 
+    <ImageView
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_location_on_black_24dp"
+            android:layout_width="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/todo"
+            android:layout_marginEnd="10dp" android:layout_marginStart="10dp"/>
 
     <LinearLayout
-            android:background="?android:attr/selectableItemBackground"
-            android:padding="5dp"
-            android:orientation="horizontal"
+            android:layout_marginStart="6dp"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+            android:layout_marginEnd="5dp" android:layout_marginLeft="6dp">
 
-        <ImageView
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_location_on_black_24dp"
-                android:layout_width="30dp"
-                android:layout_marginRight="10dp"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/todo"
-                android:layout_marginEnd="10dp" android:layout_marginStart="10dp"/>
+        <TextView
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:layout_marginBottom="6dp"
+                android:text="@string/sample_place"
+                android:id="@+id/placeTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:textSize="12sp"
+                android:text="@string/sample_place_formatted_address"
+                android:id="@+id/placeFormattedAddressTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         <LinearLayout
-                android:layout_marginStart="6dp"
-                android:layout_marginRight="5dp"
-                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:background="#5BBEBEBE"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp" android:layout_marginLeft="6dp">
-
-            <TextView
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="6dp"
-                    android:text="@string/sample_place"
-                    android:id="@+id/placeTitleTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:textSize="12sp"
-                    android:text="@string/sample_place_formatted_address"
-                    android:id="@+id/placeFormattedAddressTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                    android:layout_marginTop="5dp"
-                    android:background="#5BBEBEBE"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp">
-
-            </LinearLayout>
+                android:layout_height="1dp">
 
         </LinearLayout>
 
     </LinearLayout>
 
-
-</layout>
+</LinearLayout>

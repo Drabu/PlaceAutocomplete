@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.jakewharton.rxbinding2.view.RxView
 import com.oneclickaway.opensource.placeautocomplete.R
 import com.oneclickaway.opensource.placeautocomplete.api.bean.places_response.PredictionsItem
@@ -21,8 +22,8 @@ class SearchResultAdapter(
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder =
         ViewHolder(
 
-           listOfCandidatesItem = listOfCandidatesItem,
-           binding =  LayoutInflater.from(p0.context).inflate(R.layout.search_result_row,   p0,  false),
+            listOfCandidatesItem = listOfCandidatesItem,
+            binding = LayoutInflater.from(p0.context).inflate(R.layout.search_result_row, p0, false),
             placeClickListerner = placeClickListerner
 
         )
@@ -31,9 +32,9 @@ class SearchResultAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        /*holder.binding.placeTitleTV.text = listOfCandidatesItem?.get(position)?.structuredFormatting?.mainText
-        holder.binding.placeFormattedAddressTV.text =
-            listOfCandidatesItem?.get(position)?.structuredFormatting?.secondaryText*/
+        holder.placeTitleTV.text = listOfCandidatesItem?.get(position)?.structuredFormatting?.mainText
+        holder.placeFormattedAddressTV.text =
+            listOfCandidatesItem?.get(position)?.structuredFormatting?.secondaryText
 
     }
 
@@ -52,8 +53,22 @@ class SearchResultAdapter(
         var placeClickListerner: PlaceClickListerner
     ) : RecyclerView.ViewHolder(binding) {
 
+        lateinit var placeTitleTV: TextView
+        lateinit var placeFormattedAddressTV: TextView
+
+
         init {
+            inflateViews()
+
             setItemClickListener()
+        }
+
+        private fun inflateViews() {
+
+            placeTitleTV = itemView.findViewById(R.id.placeTitleTV)
+            placeFormattedAddressTV = itemView.findViewById(R.id.placeFormattedAddressTV)
+
+
         }
 
         @SuppressLint("CheckResult")

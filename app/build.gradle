@@ -16,7 +16,6 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        ext.recyclerViewVersion     = "28.0.0"
 
         release {
             minifyEnabled false
@@ -41,9 +40,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-//    implementation project(':place_autocomplete')
+    implementation project(':place_autocomplete')
 
-    implementation 'com.github.Drabu:PlaceAutocomplete:1.03'
+//    implementation 'com.github.Drabu:PlaceAutocomplete:1.03'
 //    implementation 'com.github.Drabu:PlaceAutocomplete:1.0.2'
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 

@@ -1,27 +1,36 @@
 package com.oneclickaway.opensource.placeautocomplete.ui
 
+import android.app.Activity
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
-import android.widget.Toast
+import android.widget.*
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.oneclickaway.opensource.placeautocomplete.R
 import com.oneclickaway.opensource.placeautocomplete.api.bean.places_response.PredictionsItem
 import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesStatusCodes
 import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesViewModel
 import com.oneclickaway.opensource.placeautocomplete.interfaces.PlaceClickListerner
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.parcel.Parcelize
+import java.util.concurrent.TimeUnit
 
 /** @author @buren ---> {This activity will take care of picking the place and returning back the response}*/
 class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnClickListener {
-    override fun onPlaceClicked(candidateItem: PredictionsItem?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     private lateinit var viewModel: SearchPlacesViewModel
-//    private lateinit var binding: ActivitySearchPlaceBinding
+    //    private lateinit var binding: ActivitySearchPlaceBinding
     private var compositeDisposable = CompositeDisposable()
     private lateinit var searchListAdapter: SearchResultAdapter
 
@@ -30,10 +39,19 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
     private var enclosingRadius: String? = null
 
 
+    /*view*/
+
+    lateinit var searchTitleTV: TextView
+    lateinit var searchProgressBar: ProgressBar
+    lateinit var noPlacesFoundLL : LinearLayout
+    lateinit var placeNamET : EditText
+    lateinit var searchResultsRV : RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_place)
-//        binding = DataBindingUtil.setContentView(this, R.layout.activity_search_place)
+
+        inflateViews()
 
         initializeDependency()
 
@@ -41,11 +59,21 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
 
         setOnClickListeners()
 
-        /*setRecyclerView()*/
+        setRecyclerView()
 
-//        setOnQueryChangeListener()
-//
-//        attachLiveObservers()
+        setOnQueryChangeListener()
+
+        attachLiveObservers()
+
+    }
+
+    private fun inflateViews() {
+
+        searchTitleTV = findViewById(R.id.searchTitleTV)
+        searchProgressBar = findViewById(R.id.searchProgressBar)
+        noPlacesFoundLL = findViewById(R.id.noPlacesFoundLL)
+        placeNamET = findViewById(R.id.placeNamET)
+        searchResultsRV = findViewById(R.id.searchResultsRV)
 
     }
 
@@ -62,7 +90,7 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
             apiKey = configuration?.apiKey
             location = configuration?.location
             enclosingRadius = configuration?.enclosingRadius
-//            binding.searchTitleTV.text = configuration?.searchBarTitle
+            searchTitleTV.text = configuration?.searchBarTitle
 
         } else {
             /*finish*/
@@ -72,22 +100,22 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
 
     }
 
-  /*  private fun attachLiveObservers() {
+      private fun attachLiveObservers() {
 
-        viewModel.getLiveListOfSearchResultsStream().observe(this, Observer {
-            *//*refresh the adapter here*//*
-            binding.searchProgressBar.visibility = View.GONE
+          viewModel.getLiveListOfSearchResultsStream().observe(this, Observer {
+//              refresh the adapter here
+              searchProgressBar.visibility = View.GONE
             searchListAdapter.setSearchCandidates(it)
             if (it?.size == 0) {
-                if (binding.placeNamET.text.toString().isNotEmpty()) {
-                    binding.noPlacesFoundLL.visibility = View.VISIBLE
+                if (placeNamET.text.toString().isNotEmpty()) {
+                    noPlacesFoundLL.visibility = View.VISIBLE
                     Log.i(javaClass.simpleName, "attachLiveObservers: List is empty!")
                 } else {
-                    binding.noPlacesFoundLL.visibility = View.GONE
+                    noPlacesFoundLL.visibility = View.GONE
                 }
 
             } else {
-                binding.noPlacesFoundLL.visibility = View.GONE
+                noPlacesFoundLL.visibility = View.GONE
                 Log.i(javaClass.simpleName, "attachLiveObservers: List has contents!")
             }
         })
@@ -95,7 +123,7 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
 
 
         viewModel.getPlaceDetailsLiveDataStream().observe(this, Observer {
-            binding.searchProgressBar.visibility = View.GONE
+            searchProgressBar.visibility = View.GONE
             Log.d(javaClass.simpleName, "attachLiveObservers:  ${it?.geometry?.location?.lat} $it ")
             val resultData = Intent()
             resultData.putExtra(SearchPlacesStatusCodes.PLACE_DATA, it)
@@ -111,33 +139,33 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
 
         })
 
-    }*/
+    }
 
     private fun setViewModel() {
         viewModel = ViewModelProviders.of(this).get(SearchPlacesViewModel::class.java)
     }
 
-    /*private fun setRecyclerView() {
+    private fun setRecyclerView() {
 
-        binding.searchResultsRV.layoutManager = LinearLayoutManager(this)
+        searchResultsRV.layoutManager = LinearLayoutManager(this)
         searchListAdapter = SearchResultAdapter(placeClickListerner = this)
-        binding.searchResultsRV.adapter = searchListAdapter
+        searchResultsRV.adapter = searchListAdapter
 
-    }*/
+    }
 
-    /*private fun setOnQueryChangeListener() {
+    private fun setOnQueryChangeListener() {
 
         compositeDisposable.add(
 
-            RxTextView.textChanges(binding.placeNamET)
+            RxTextView.textChanges(placeNamET)
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .filter {
 
                     runOnUiThread {
                         if (it.toString().isNotBlank())
-                            binding.searchResultsRV.visibility = View.VISIBLE
+                            searchResultsRV.visibility = View.VISIBLE
                         else
-                            binding.searchResultsRV.visibility = View.GONE
+                            searchResultsRV.visibility = View.GONE
                     }
 
                     it.toString().isNotBlank()
@@ -150,7 +178,7 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
 
                     override fun onNext(t: CharSequence) {
                         Log.d(javaClass.simpleName, "setOnQueryChangeListener: ${t}")
-                        binding.searchProgressBar.visibility = View.VISIBLE
+                        searchProgressBar.visibility = View.VISIBLE
                         viewModel.requestListOfSearchResults(
                             placeHint = t.toString(),
                             apiKey = apiKey!!,
@@ -167,13 +195,13 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
                 })
         )
 
-    }*/
+    }
 
-    /*override fun onPlaceClicked(candidateItem: PredictionsItem?) {
+    override fun onPlaceClicked(candidateItem: PredictionsItem?) {
 
-        binding.searchProgressBar.visibility = View.VISIBLE
+        searchProgressBar.visibility = View.VISIBLE
         viewModel.requestPlaceDetails(candidateItem?.placeId.toString(), apiKey = apiKey!!)
-    }*/
+    }
 
     override fun onDestroy() {
         super.onDestroy()
