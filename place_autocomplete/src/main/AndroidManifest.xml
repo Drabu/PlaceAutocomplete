@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.oneclickaway.opensource.placeautocomplete">
 
+
     <application>
+
+        <uses-library android:name="android.arch.lifecycle:extensions:1.1.1" android:required="true"/>
         <activity
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar"
                 android:name=".ui.SearchPlaceActivity"/>

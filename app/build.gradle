@@ -24,7 +24,6 @@ android {
     }
 
 
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -41,10 +40,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation project(':place_autocomplete')
-
-//    implementation 'com.github.Drabu:PlaceAutocomplete:1.03'
-//    implementation 'com.github.Drabu:PlaceAutocomplete:1.0.2'
-//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
 
