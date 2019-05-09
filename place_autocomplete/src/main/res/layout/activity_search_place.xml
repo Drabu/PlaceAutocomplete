@@ -53,8 +53,7 @@
 
         <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardElevation="3dp">
+                android:layout_height="wrap_content">
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -103,8 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="60dp"
-            app:cardElevation="2dp">
+            android:layout_marginTop="60dp">
 
         <LinearLayout
                 android:layout_width="match_parent"
