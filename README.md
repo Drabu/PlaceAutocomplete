@@ -1,6 +1,7 @@
 PlaceAutocomplete
 ========
 Google Places Api Implementation
+
 [ ![Download](https://api.bintray.com/packages/drabu/PlaceAutocomplete/com.opensource.oneclickaway.android.searchplaces/images/download.svg) ](https://bintray.com/drabu/PlaceAutocomplete/com.opensource.oneclickaway.android.searchplaces/_latestVersion)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/34c0864ec96f4ce8a094a60d040e7ff7)](https://www.codacy.com/app/Drabu/PlaceAutocomplete?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Drabu/PlaceAutocomplete&amp;utm_campaign=Badge_Grade)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
