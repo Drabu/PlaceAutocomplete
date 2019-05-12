@@ -5,6 +5,7 @@ Google Places Api Implementation
 [ ![Download](https://api.bintray.com/packages/drabu/PlaceAutocomplete/com.opensource.oneclickaway.android.searchplaces/images/download.svg) ](https://bintray.com/drabu/PlaceAutocomplete/com.opensource.oneclickaway.android.searchplaces/_latestVersion)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/34c0864ec96f4ce8a094a60d040e7ff7)](https://www.codacy.com/app/Drabu/PlaceAutocomplete?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Drabu/PlaceAutocomplete&amp;utm_campaign=Badge_Grade)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PlaceAutocomplete-blue.svg?style=flat)](https://android-arsenal.com/details/1/7655)
 
 After Google came up with the update that Play Services version of the Places SDK for Android (in Google Play Services 16.0.0) is deprecated as of January 29, 2019, and will be turned off on July 29, 2019.
 which includes PlaceAutocompleteFragment also to be removed from the library.After getting this update from google we had to immediately migrate to an alternative where we ended up creating this library,  PlaceAutocompleteFragment  provides you with an elegant user interface to choose a location and works the exact same as PlaceAutocompleteFragment .
