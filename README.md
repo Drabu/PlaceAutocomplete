@@ -2,12 +2,13 @@ PlaceAutocomplete
 ========
 Google Places Api Implementation
 
+[ ![Download](https://api.bintray.com/packages/drabu/PlaceAutocomplete/com.opensource.oneclickaway.android.searchplaces/images/download.svg) ](https://bintray.com/drabu/PlaceAutocomplete/com.opensource.oneclickaway.android.searchplaces/_latestVersion)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/34c0864ec96f4ce8a094a60d040e7ff7)](https://www.codacy.com/app/Drabu/PlaceAutocomplete?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Drabu/PlaceAutocomplete&amp;utm_campaign=Badge_Grade)
-[![](https://jitpack.io/v/Drabu/PlaceAutocomplete.svg)](https://jitpack.io/#Drabu/PlaceAutocomplete)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PlaceAutocomplete-blue.svg?style=flat)](https://android-arsenal.com/details/1/7655)
 
 After Google came up with the update that Play Services version of the Places SDK for Android (in Google Play Services 16.0.0) is deprecated as of January 29, 2019, and will be turned off on July 29, 2019.
-which includes PlaceAutoComplete also to be removed from the library.After getting this update from google we had to immidiately switch to an alternative where i endded up creating this library,  PlacesAutocomplete provides you with an elegant user interface to choose a location and works the exact same as PlaceAutoComplete.
+which includes PlaceAutocompleteFragment also to be removed from the library.After getting this update from google we had to immediately migrate to an alternative where we ended up creating this library,  PlaceAutocompleteFragment  provides you with an elegant user interface to choose a location and works the exact same as PlaceAutocompleteFragment .
 ### Features
 Custom title message for the view.
 
@@ -21,6 +22,9 @@ Suupport for landscape orientation.
 
 This Kotlin Library is build with MVVM Archetecture and runs on top of RxJava 2. The library uses various Rx operators like debounce, throttlefirst operators to reduce network calls and optimze location query.
 
+## Dependencies
+
+Since this library is build with MVVM Architecture and uses Kotlin, RxAndroid, RxJava 2, Rx Binding,recyclerview, cardview, retrofit and  various android architecture components, so you can find  the dependencies [here](https://github.com/Drabu/PlaceAutocomplete/blob/master/place_autocomplete/build.gradle). and add them to your build.gradle file.
 
 ### How it works
 
@@ -31,19 +35,11 @@ This Kotlin Library is build with MVVM Archetecture and runs on top of RxJava 2.
 Configuration
 -------------
 
-Add it in your root build.gradle at the end of repositories:
-    
-    allprojects {
-        repositories {
-          ...
-          maven { url 'https://jitpack.io' }
-        }
-     }
 Add the dependency: 
 
     dependencies {
-    		//copy the version from jitpack badge	
-		implementation 'com.github.Drabu:PlaceAutocomplete:x.x.x'
+    		//copy the version from download badge above 	
+		implementation 'com.opensource.oneclickaway.android.searchplaces:place_autocomplete:x.x.x'
 	 }
 
 Mandatory Field: 
