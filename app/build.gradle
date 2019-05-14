@@ -17,7 +17,12 @@ android {
     }
     buildTypes {
 
+        debug {
+            buildConfigField 'String', "ApiKey", SearchPlaces_MapsApiKey
+        }
+
         release {
+            buildConfigField 'String', "ApiKey", SearchPlaces_MapsApiKey
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

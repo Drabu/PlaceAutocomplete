@@ -21,11 +21,7 @@ class SearchResultAdapter(
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder =
         ViewHolder(
-
-            listOfCandidatesItem = listOfCandidatesItem,
-            binding = LayoutInflater.from(p0.context).inflate(R.layout.search_result_row, p0, false),
-            placeClickListerner = placeClickListerner
-
+            binding = LayoutInflater.from(p0.context).inflate(R.layout.search_result_row, p0, false)
         )
 
     override fun getItemCount(): Int = listOfCandidatesItem!!.size
@@ -47,17 +43,15 @@ class SearchResultAdapter(
 
 
     /** @author @buren ---> {holds row vew}*/
-    class ViewHolder(
-        var listOfCandidatesItem: List<PredictionsItem?>?,
-        var binding: View,
-        var placeClickListerner: PlaceClickListerner
+    inner class ViewHolder(
+        var binding: View
     ) : RecyclerView.ViewHolder(binding) {
 
         lateinit var placeTitleTV: TextView
         lateinit var placeFormattedAddressTV: TextView
 
-
         init {
+
             inflateViews()
 
             setItemClickListener()

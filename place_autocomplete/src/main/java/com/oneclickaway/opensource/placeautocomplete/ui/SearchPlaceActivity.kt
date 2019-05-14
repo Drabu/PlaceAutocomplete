@@ -43,9 +43,9 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
 
     lateinit var searchTitleTV: TextView
     lateinit var searchProgressBar: ProgressBar
-    lateinit var noPlacesFoundLL : LinearLayout
-    lateinit var placeNamET : EditText
-    lateinit var searchResultsRV : RecyclerView
+    lateinit var noPlacesFoundLL: LinearLayout
+    lateinit var placeNamET: EditText
+    lateinit var searchResultsRV: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,11 +100,11 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
 
     }
 
-      private fun attachLiveObservers() {
+    private fun attachLiveObservers() {
 
-          viewModel.getLiveListOfSearchResultsStream().observe(this, Observer {
-//              refresh the adapter here
-              searchProgressBar.visibility = View.GONE
+        viewModel.getLiveListOfSearchResultsStream().observe(this, Observer {
+            //              refresh the adapter here
+            searchProgressBar.visibility = View.GONE
             searchListAdapter.setSearchCandidates(it)
             if (it?.size == 0) {
                 if (placeNamET.text.toString().isNotEmpty()) {

@@ -21,7 +21,7 @@ class ExampleLocationSearch : AppCompatActivity() {
     lateinit var placeDetailsTV: TextView
 
 
-    var API_KEY = "AIzaSyBuVzsoP0X5Tp_7t9HwgYtnNotioUGPb3Q"
+    var API_KEY = BuildConfig.ApiKey
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
