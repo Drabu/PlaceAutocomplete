@@ -14,7 +14,7 @@ object RESTAPIManager {
 
     private fun getOkhttpClient(): OkHttpClient {
 
-        var okhttpBuilder = OkHttpClient.Builder()
+        val okhttpBuilder = OkHttpClient.Builder()
         okhttpBuilder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         okhttpBuilder.callTimeout(100, TimeUnit.SECONDS)
         okhttpBuilder.retryOnConnectionFailure(true)

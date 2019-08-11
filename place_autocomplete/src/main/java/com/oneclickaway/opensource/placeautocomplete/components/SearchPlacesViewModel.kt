@@ -2,6 +2,8 @@ package com.oneclickaway.opensource.placeautocomplete.components
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
+import com.oneclickaway.opensource.placeautocomplete.api.model.LoadingManager
 
 /** @author @buren ---> {view model used to hold data while device configuration is changed}*/
 class SearchPlacesViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,9 +28,11 @@ class SearchPlacesViewModel(application: Application) : AndroidViewModel(applica
     /** @author @buren ---> {micro-service used to get live data stream of place details}*/
     fun getPlaceDetailsLiveDataStream() = searchPlacesRepo.getPlaceDetailsLiveDataStream()
 
-    /** @author @buren ---> {clears the subscribers}*/
-    fun clear() {
-        searchPlacesRepo.clear()
-    }
+    fun getLoadingPredictionManager(): LiveData<LoadingManager> = searchPlacesRepo.getLoadingPredictionManager()
+
+    fun getLoadingPlaceManager(): LiveData<LoadingManager> = searchPlacesRepo.getLoadingPlaceManager()
+
+
+
 
 }
