@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.jakewharton.rxbinding2.view.RxView
 import com.oneclickaway.opensource.placeautocomplete.R
-import com.oneclickaway.opensource.placeautocomplete.api.bean.places_response.PredictionsItem
+import com.oneclickaway.opensource.placeautocomplete.data.api.bean.places_response.PredictionsItem
 import com.oneclickaway.opensource.placeautocomplete.interfaces.PlaceClickListerner
 import java.util.concurrent.TimeUnit
 

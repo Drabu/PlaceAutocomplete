@@ -71,7 +71,7 @@ For build version greater LOLLIPOP, you can use Activity Transition like this:
 	startActivityForResult(intent, 700, options)
 #Example Kotlin Class: 
 
-    import com.oneclickaway.opensource.placeautocomplete.api.bean.place_details.PlaceDetails
+    import com.oneclickaway.opensource.placeautocomplete.data.api.bean.place_details.PlaceDetails
     import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesStatusCodes
     import com.oneclickaway.opensource.placeautocomplete.ui.SearchPlaceActivity
 

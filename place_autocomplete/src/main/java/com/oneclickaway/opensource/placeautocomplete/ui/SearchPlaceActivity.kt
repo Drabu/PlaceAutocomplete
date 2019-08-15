@@ -14,15 +14,19 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.*
 import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.oneclickaway.opensource.placeautocomplete.R
-import com.oneclickaway.opensource.placeautocomplete.api.bean.places_response.PredictionsItem
-import com.oneclickaway.opensource.placeautocomplete.api.model.LoadingManager
-import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesStatusCodes
-import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesViewModel
+import com.oneclickaway.opensource.placeautocomplete.data.api.bean.places_response.PredictionsItem
+import com.oneclickaway.opensource.placeautocomplete.data.view_model.SearchPlacesViewModel
 import com.oneclickaway.opensource.placeautocomplete.interfaces.PlaceClickListerner
+import com.oneclickaway.opensource.placeautocomplete.utils.Commons.isNetworkConnected
+import com.oneclickaway.opensource.placeautocomplete.utils.LoadingManager
+import com.oneclickaway.opensource.placeautocomplete.utils.LoadingManager.*
+import com.oneclickaway.opensource.placeautocomplete.utils.SearchPlacesStatusCodes
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
@@ -37,19 +41,20 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
     private lateinit var searchListAdapter: SearchResultAdapter
     lateinit var gettingPlaceData: Dialog
 
-
     private var apiKey: String? = null
     private var location: String? = null
     private var enclosingRadius: String? = null
-
 
     /*view*/
 
     lateinit var searchTitleTV: TextView
     lateinit var searchProgressBar: ProgressBar
-    lateinit var noPlacesFoundLL: LinearLayout
+    lateinit var secondaryInformationLL: LinearLayout
     lateinit var placeNamET: EditText
     lateinit var searchResultsRV: RecyclerView
+
+    lateinit var secondaryInfoSubTitleTV: TextView
+    lateinit var secondaryInfoTitleTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,14 +82,50 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
 
         searchTitleTV = findViewById(R.id.searchTitleTV)
         searchProgressBar = findViewById(R.id.searchProgressBar)
-        noPlacesFoundLL = findViewById(R.id.noPlacesFoundLL)
+        secondaryInformationLL = findViewById(R.id.secondaryInformationLL)
         placeNamET = findViewById(R.id.placeNamET)
         searchResultsRV = findViewById(R.id.searchResultsRV)
+
+        secondaryInfoTitleTV = findViewById(R.id.secondaryInfoTitleTV)
+        secondaryInfoSubTitleTV = findViewById(R.id.secondaryInfoSubTitleTV)
 
     }
 
     private fun setOnClickListeners() {
 //        binding.backImageBtn.setOnClickListener(this)
+    }
+
+
+    private fun setSecondaryStateInformation(pageStatus: LoadingManager) {
+
+        searchResultsRV.visibility = GONE
+        searchProgressBar.visibility = GONE
+        secondaryInformationLL.visibility = VISIBLE
+
+        when (pageStatus) {
+
+            STATE_NO_INTERNET -> {
+                secondaryInfoTitleTV.text = "No internet"
+                secondaryInfoSubTitleTV.text = "Please connect to internet and try again"
+
+            }
+
+            STATE_ERROR -> {
+                secondaryInfoTitleTV.text = "Oops!"
+                secondaryInfoSubTitleTV.text = "We're having some trouble connecting to our servers"
+            }
+
+            STATE_NO_RESULT -> {
+                secondaryInfoTitleTV.text = getString(R.string.location_not_found)
+                secondaryInfoSubTitleTV.text = getString(R.string.please_check_spell_errors)
+            }
+
+
+            else -> {
+                print("no state detected")
+            }
+        }
+
     }
 
     private fun initializeDependency() {
@@ -109,20 +150,9 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
     private fun attachLiveObservers() {
 
         viewModel.getLiveListOfSearchResultsStream().observe(this, Observer {
-            //              refresh the adapter here
+            //refresh the adapter here
             searchListAdapter.setSearchCandidates(it)
-            if (it?.size == 0) {
-                if (placeNamET.text.toString().isNotEmpty()) {
-                    noPlacesFoundLL.visibility = View.VISIBLE
-                    Log.i(javaClass.simpleName, "attachLiveObservers: List is empty!")
-                } else {
-                    noPlacesFoundLL.visibility = View.GONE
-                }
 
-            } else {
-                noPlacesFoundLL.visibility = View.GONE
-                Log.i(javaClass.simpleName, "attachLiveObservers: List has contents!")
-            }
         })
 
 
@@ -132,7 +162,6 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
             val resultData = Intent()
             resultData.putExtra(SearchPlacesStatusCodes.PLACE_DATA, it)
             setResult(Activity.RESULT_OK, resultData)
-
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 finishAfterTransition()
@@ -144,27 +173,56 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
         })
 
 
-        viewModel.searchPlacesRepo.getLoadingPredictionManager().observe(this, Observer {
+        viewModel.getLoadingPredictionManager().observe(this, Observer {
 
             when (it) {
 
-
-                LoadingManager.STATE_REFRESHING -> {
+                STATE_REFRESHING -> {
                     searchProgressBar.visibility = View.VISIBLE
+                    /*user is searching a random world*/
+                    if (secondaryInformationLL.visibility == VISIBLE) {
+                        Log.d("VISIBLITY", "STATE_REFRESHING _ IF")
+//                        searchResultsRV.visibility = View.INVISIBLE
+//                        secondaryInformationLL.visibility = View.GONE
+
+                    } else {
+                        Log.d("VISIBLITY", "STATE_REFRESHING _ ELSE")
+
+                        searchResultsRV.visibility = View.VISIBLE
+                    }
                 }
 
-                LoadingManager.STATE_COMPLETED -> {
+                STATE_COMPLETED -> {
+                    Log.d("VISIBLITY", "STATE_COMPLETED")
+                    searchResultsRV.visibility = View.VISIBLE
                     searchProgressBar.visibility = View.GONE
+                    secondaryInformationLL.visibility = View.GONE
+
                 }
 
 
-                LoadingManager.STATE_NO_INTERNET -> {
-                    searchProgressBar.visibility = View.GONE
+                STATE_NO_INTERNET -> {
+                    Log.d("VISIBLITY", "STATE_NO_INTERNET")
+                    setSecondaryStateInformation(STATE_NO_INTERNET)
                 }
 
 
-                LoadingManager.STATE_ERROR -> {
+                STATE_ERROR -> {
+                    Log.d("VISIBLITY", "STATE_ERROR")
+                    setSecondaryStateInformation(STATE_ERROR)
+                }
+
+                STATE_NO_RESULT -> {
+                    Log.d("VISIBLITY", "STATE_NO_RESULT")
+                    setSecondaryStateInformation(STATE_NO_RESULT)
+
+                }
+
+                STATE_IDLE -> {
+                    Log.d("VISIBLITY", "STATE_IDLE")
+                    searchResultsRV.visibility = View.GONE
                     searchProgressBar.visibility = View.GONE
+                    secondaryInformationLL.visibility = View.GONE
                 }
 
 
@@ -174,25 +232,25 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
         })
 
 
-        viewModel.searchPlacesRepo.getLoadingPlaceManager().observe(this, Observer {
+        viewModel.getLoadingPlaceManager().observe(this, Observer {
 
             when (it) {
 
-                LoadingManager.STATE_REFRESHING -> {
+                STATE_REFRESHING -> {
                     gettingPlaceData.show()
                 }
 
-                LoadingManager.STATE_COMPLETED -> {
+                STATE_COMPLETED -> {
                     gettingPlaceData.cancel()
                 }
 
 
-                LoadingManager.STATE_NO_INTERNET -> {
+                STATE_NO_INTERNET -> {
                     gettingPlaceData.cancel()
                 }
 
 
-                LoadingManager.STATE_ERROR -> {
+                STATE_ERROR -> {
                     gettingPlaceData.cancel()
                 }
 
@@ -201,7 +259,6 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
             }
 
         })
-
 
     }
 
@@ -224,10 +281,11 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
             .filter {
 
                 runOnUiThread {
-                    if (it.toString().isNotBlank())
-                        searchResultsRV.visibility = View.VISIBLE
-                    else
-                        searchResultsRV.visibility = View.GONE
+                    if (it.toString().isNotBlank()) {
+                        /*search box contains location query checking internet connection*/
+
+                    } else
+                        viewModel.getLoadingPredictionManager().postValue(STATE_IDLE)
                 }
 
                 it.toString().isNotBlank()
@@ -239,7 +297,12 @@ class SearchPlaceActivity : AppCompatActivity(), PlaceClickListerner, View.OnCli
                 }
 
                 override fun onNext(t: CharSequence) {
-                    Log.d(javaClass.simpleName, "setOnQueryChangeListener: ${t}")
+
+                    if (!isNetworkConnected(this@SearchPlaceActivity)) {
+                        viewModel.getLoadingPredictionManager().postValue(STATE_NO_INTERNET)
+                        return
+                    }
+
                     viewModel.requestListOfSearchResults(
                         placeHint = t.toString(),
                         apiKey = apiKey!!,

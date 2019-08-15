@@ -11,9 +11,10 @@ import android.util.Pair
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import com.oneclickaway.opensource.placeautocomplete.api.bean.place_details.PlaceDetails
-import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesStatusCodes
+import com.oneclickaway.opensource.placeautocomplete.data.api.bean.place_details.PlaceDetails
 import com.oneclickaway.opensource.placeautocomplete.ui.SearchPlaceActivity
+import com.oneclickaway.opensource.placeautocomplete.utils.SearchPlacesStatusCodes
+
 /** @author @buren ---> {Sample activity taht implements the feature}*/
 class ExampleLocationSearch : AppCompatActivity() {
 
