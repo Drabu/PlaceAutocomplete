@@ -11,10 +11,9 @@ import javax.annotation.Generated
 @Parcelize
 @Generated("com.robohorse.robopojogenerator")
 data class PlusCode(
+    @field:SerializedName("compound_code")
+    var compoundCode: String? = null,
 
-	@field:SerializedName("compound_code")
-	val compoundCode: String? = null,
-
-	@field:SerializedName("global_code")
-	val globalCode: String? = null
+    @field:SerializedName("global_code")
+    var globalCode: String? = null
 ) : Parcelable

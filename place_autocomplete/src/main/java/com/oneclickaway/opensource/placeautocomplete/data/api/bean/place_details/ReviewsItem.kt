@@ -13,27 +13,28 @@ import javax.annotation.Generated
 @Generated("com.robohorse.robopojogenerator")
 data class ReviewsItem(
 
-	@field:SerializedName("author_name")
-	val authorName: String? = null,
+    @field:SerializedName("author_name")
+    var authorName: String? = null,
 
-	@field:SerializedName("profile_photo_url")
-	val profilePhotoUrl: String? = null,
+    @field:SerializedName("profile_photo_url")
+    var profilePhotoUrl: String? = null,
 
-	@field:SerializedName("author_url")
-	val authorUrl: String? = null,
+    @field:SerializedName("author_url")
+    var authorUrl: String? = null,
 
-	@field:SerializedName("rating")
-	val rating: Int? = null,
+    @field:SerializedName("rating")
+    var rating: Int? = null,
 
-	@field:SerializedName("language")
-	val language: String? = null,
+    @field:SerializedName("language")
+    var language: String? = null,
 
-	@field:SerializedName("text")
-	val text: String? = null,
+    @field:SerializedName("text")
+    var text: String? = null,
 
-	@field:SerializedName("time")
-	val time: Int? = null,
+    @field:SerializedName("time")
+    var time: Int? = null,
 
-	@field:SerializedName("relative_time_description")
-	val relativeTimeDescription: String? = null
+    @field:SerializedName("relative_time_description")
+    var relativeTimeDescription: String? = null
+
 ) : Parcelable

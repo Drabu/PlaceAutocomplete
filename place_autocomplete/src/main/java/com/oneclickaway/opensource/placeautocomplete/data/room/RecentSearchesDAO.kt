@@ -4,15 +4,15 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import com.oneclickaway.opensource.placeautocomplete.data.api.bean.place_details.PlaceDetails
+import com.oneclickaway.opensource.placeautocomplete.data.model.room.SearchSelectedItem
 
 @Dao
 interface RecentSearchesDAO {
 
-    @Query("")
-    fun getRecentSearches(): List<PlaceDetails>
+    @Query("SELECT * FROM SearchSelectedItem ORDER BY searchCurrentMilliseconds DESC")
+    fun getRecentSearches(): List<SearchSelectedItem>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addSearchItem(placeDetails: PlaceDetails)
+    fun addSearchItem(searchSelectedItem: SearchSelectedItem)
 
 }

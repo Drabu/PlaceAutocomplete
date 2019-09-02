@@ -1,4 +1,4 @@
-package com.oneclickaway.opensource.placeautocomplete.ui
+package com.oneclickaway.opensource.placeautocomplete.data.adapter
 
 import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
@@ -9,13 +9,13 @@ import android.widget.TextView
 import com.jakewharton.rxbinding2.view.RxView
 import com.oneclickaway.opensource.placeautocomplete.R
 import com.oneclickaway.opensource.placeautocomplete.data.api.bean.places_response.PredictionsItem
-import com.oneclickaway.opensource.placeautocomplete.interfaces.PlaceClickListerner
+import com.oneclickaway.opensource.placeautocomplete.interfaces.SearchPlaces
 import java.util.concurrent.TimeUnit
 
 /** @author @buren ---> {adapter to set result views in row}*/
 class SearchResultAdapter(
     var listOfCandidatesItem: List<PredictionsItem?>? = ArrayList(),
-    var placeClickListerner: PlaceClickListerner
+    var placeItemSelectedListener: SearchPlaces.PlaceItemSelectedListener
 ) :
     RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
 
@@ -70,7 +70,11 @@ class SearchResultAdapter(
             RxView.clicks(binding)
                 .throttleFirst(700, TimeUnit.MILLISECONDS)
                 .subscribe {
-                    placeClickListerner.onPlaceClicked(listOfCandidatesItem?.get(adapterPosition))
+                    placeItemSelectedListener.onPlaceItemSelected(
+                        listOfCandidatesItem?.get(
+                            adapterPosition
+                        )
+                    )
                 }
         }
     }

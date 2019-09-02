@@ -7,12 +7,12 @@ import javax.annotation.Generated
 @Generated("com.robohorse.robopojogenerator")
 data class PlacesDetailsResponse(
 
-	@field:SerializedName("result")
-	val result: PlaceDetails? = null,
+    @field:SerializedName("result")
+    var result: PlaceDetails? = null,
 
-	@field:SerializedName("html_attributions")
-	val htmlAttributions: List<Any?>? = null,
+    @field:SerializedName("html_attributions")
+    var htmlAttributions: List<Any?>? = null,
 
-	@field:SerializedName("status")
-	val status: String? = null
+    @field:SerializedName("status")
+    var status: String? = null
 )

@@ -12,9 +12,9 @@ import javax.annotation.Generated
 @Generated("com.robohorse.robopojogenerator")
 data class Southwest(
 
-	@field:SerializedName("lng")
-	val lng: Double? = null,
+    @field:SerializedName("lng")
+    var lng: Double? = null,
 
-	@field:SerializedName("lat")
-	val lat: Double? = null
+    @field:SerializedName("lat")
+    var lat: Double? = null
 ) : Parcelable

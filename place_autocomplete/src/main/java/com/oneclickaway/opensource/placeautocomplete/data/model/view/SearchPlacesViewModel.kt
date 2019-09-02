@@ -1,16 +1,18 @@
-package com.oneclickaway.opensource.placeautocomplete.data.view_model
+package com.oneclickaway.opensource.placeautocomplete.data.model.view
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import com.oneclickaway.opensource.placeautocomplete.data.model.room.SearchSelectedItem
 import com.oneclickaway.opensource.placeautocomplete.data.repositories.SearchPlacesRepo
 import com.oneclickaway.opensource.placeautocomplete.utils.LoadingManager
 
 /** @author @buren ---> {view model used to hold data while device configuration is changed}*/
-class SearchPlacesViewModel(application: Application) : AndroidViewModel(application) {
+class SearchPlacesViewModel(private val applicationContext: Application) :
+    AndroidViewModel(applicationContext) {
 
-    val searchPlacesRepo = SearchPlacesRepo()
+
+    private val searchPlacesRepo = SearchPlacesRepo(applicationContext)
 
 
     /** @author @buren ---> {micro-service used to request data stream of search results}*/
@@ -30,11 +32,19 @@ class SearchPlacesViewModel(application: Application) : AndroidViewModel(applica
     /** @author @buren ---> {micro-service used to get live data stream of place details}*/
     fun getPlaceDetailsLiveDataStream() = searchPlacesRepo.getPlaceDetailsLiveDataStream()
 
-    fun getLoadingPredictionManager(): MutableLiveData<LoadingManager> = searchPlacesRepo.getLoadingPredictionManager()
+    fun getLoadingPredictionManager(): LiveData<LoadingManager> =
+        searchPlacesRepo.getLoadingPredictionManager()
 
     fun getLoadingPlaceManager(): LiveData<LoadingManager> = searchPlacesRepo.getLoadingPlaceManager()
 
+    fun getRecentSearchesManager(): LiveData<LoadingManager> =
+        searchPlacesRepo.getRecentSearchesManager()
 
+    fun getRecentSearchesData(): LiveData<List<SearchSelectedItem>> =
+        searchPlacesRepo.getRecentSearches()
+
+    fun requestListOfRecentSearches() =
+        searchPlacesRepo.requestListOfRecentSearches(applicationContext)
 
 
 }
