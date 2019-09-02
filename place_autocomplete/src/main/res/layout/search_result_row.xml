@@ -3,6 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:background="?android:attr/selectableItemBackground"
         android:padding="5dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:layout_width="match_parent" >
@@ -14,7 +15,8 @@
             android:layout_marginRight="10dp"
             android:layout_height="match_parent"
             android:contentDescription="@string/todo"
-            android:layout_marginEnd="10dp" android:layout_marginStart="10dp"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp" />
 
     <LinearLayout
             android:layout_marginStart="6dp"
@@ -22,18 +24,22 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp" android:layout_marginLeft="6dp">
+            android:layout_marginLeft="6dp"
+            android:layout_marginEnd="5dp">
 
         <TextView
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="#000"
                 android:textSize="16sp"
-                android:layout_marginBottom="6dp"
                 android:text="@string/sample_place"
                 android:id="@+id/placeTitleTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         <TextView
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:textSize="12sp"
                 android:text="@string/sample_place_formatted_address"
                 android:id="@+id/placeFormattedAddressTV"

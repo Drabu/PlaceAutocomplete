@@ -11,4 +11,16 @@
     <string name="enter_some_location">Enter some location</string>
     <string name="location_not_found">Location not found</string>
     <string name="please_check_spell_errors">Please check spell errors..</string>
+
+    <!--now time-->
+    <string name="hour">hour ago</string>
+    <string name="hours">hours ago</string>
+    <string name="min">minutes ago</string>
+    <string name="days">days ago</string>
+    <string name="weak">week ago</string>
+    <string name="weaks">weeks ago</string>
+    <string name="month">mon ago</string>
+    <string name="year">year ago</string>
+    <string name="no_internet">No  Interent. Please check your internet connection and try again.</string>
+    <string name="trouble_getting_data">We are having trouble connecting to our servers.</string>
 </resources>

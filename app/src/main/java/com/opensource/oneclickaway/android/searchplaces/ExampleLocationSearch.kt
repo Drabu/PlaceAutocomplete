@@ -11,9 +11,11 @@ import android.util.Pair
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import com.oneclickaway.opensource.placeautocomplete.api.bean.place_details.PlaceDetails
-import com.oneclickaway.opensource.placeautocomplete.components.SearchPlacesStatusCodes
+import com.oneclickaway.opensource.placeautocomplete.data.api.bean.place_details.PlaceDetails
 import com.oneclickaway.opensource.placeautocomplete.ui.SearchPlaceActivity
+import com.oneclickaway.opensource.placeautocomplete.utils.SearchPlacesStatusCodes
+import java.util.*
+
 /** @author @buren ---> {Sample activity taht implements the feature}*/
 class ExampleLocationSearch : AppCompatActivity() {
 
@@ -33,18 +35,20 @@ class ExampleLocationSearch : AppCompatActivity() {
         val intent = Intent(this, SearchPlaceActivity::class.java)
         intent.putExtra(
             SearchPlacesStatusCodes.CONFIG,
-            SearchPlaceActivity.Config(
-                apiKey = API_KEY,
-                searchBarTitle = "Enter Source Location",
-                location = "12.9716,77.5946",
-                enclosingRadius = "500"
-            )
+            SearchPlaceActivity.Config.Builder(apiKey = API_KEY)
+                .setSearchBarTitle("Enter Source Location")
+                .setMyLocation("12.9716,77.5946")
+                .setEnclosingRadius("500")
+                .build()
         )
 
         searchLocationET.setOnClickListener {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                val pair = Pair.create(searchLocationET as View, SearchPlacesStatusCodes.PLACEHOLDER_TRANSITION)
+                val pair = Pair.create(
+                    searchLocationET as View,
+                    SearchPlacesStatusCodes.PLACEHOLDER_TRANSITION
+                )
                 val options = ActivityOptions.makeSceneTransitionAnimation(this, pair).toBundle()
                 startActivityForResult(intent, 700, options)
 
@@ -57,6 +61,29 @@ class ExampleLocationSearch : AppCompatActivity() {
         }
 
 
+        val calendarAlerts = Calendar.getInstance()
+        calendarAlerts.set(
+            calendarAlerts.get(Calendar.YEAR),
+            calendarAlerts.get(Calendar.DAY_OF_MONTH),
+            calendarAlerts.get(Calendar.DATE)
+        )
+
+
+        val currentTimeCalender = Calendar.getInstance()
+        currentTimeCalender.set(
+            currentTimeCalender.get(Calendar.YEAR),
+            currentTimeCalender.get(Calendar.DAY_OF_MONTH),
+            currentTimeCalender.get(Calendar.DATE),
+            0,
+            0,
+            0
+        )
+
+        val relativeTime =
+            ((calendarAlerts.timeInMillis - currentTimeCalender.timeInMillis) / 1000F) / 60F
+
+        placeDetailsTV.text = relativeTime.toString()
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -64,7 +91,8 @@ class ExampleLocationSearch : AppCompatActivity() {
 
         if (requestCode == 700 && resultCode == Activity.RESULT_OK) {
 
-            val placeDetails = data?.getParcelableExtra<PlaceDetails>(SearchPlacesStatusCodes.PLACE_DATA)
+            val placeDetails =
+                data?.getParcelableExtra<PlaceDetails>(SearchPlacesStatusCodes.PLACE_DATA)
 
             searchLocationET.setText(placeDetails?.name)
 
