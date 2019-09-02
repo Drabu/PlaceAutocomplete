@@ -22,6 +22,13 @@ Suupport for landscape orientation.
 
 This Kotlin Library is build with MVVM Archetecture and runs on top of RxJava 2. The library uses various Rx operators like debounce, throttlefirst operators to reduce network calls and optimze location query.
 
+## What's New:
+#1 Two different loaders attached, one for getting the list of predicted items and one for getting place details.<br />
+#2 Erase query with a close icon added to clear the text in the field.<br />
+#3 Keeps a record of Recent searches (Be Sure to add the dependency).<br />
+#4 Maintains recent searches in pretty time groups like Today, Yesterday, Earlier this week and previous searches.<br />
+
+
 ## Dependencies
 
 Since this library is build with MVVM Architecture and uses Kotlin, RxAndroid, RxJava 2, Rx Binding,recyclerview, cardview, retrofit and  various android architecture components, so you can find  the dependencies [here](https://github.com/Drabu/PlaceAutocomplete/blob/master/place_autocomplete/build.gradle). and add them to your build.gradle file.
@@ -42,25 +49,16 @@ Add the dependency:
 		implementation 'com.opensource.oneclickaway.android.searchplaces:place_autocomplete:x.x.x'
 	 }
 
-Mandatory Field: 
+Mandatory and optional parameters : 
         
-        val intent = Intent(this, SearchPlaceActivity::class.java)
+ 	val intent = Intent(this, SearchPlaceActivity::class.java)
         intent.putExtra(
             SearchPlacesStatusCodes.CONFIG,
-            SearchPlaceActivity.Config(apiKey = API_KEY)
-        )
-	
-Optional parameteres: 
-        
-    val intent = Intent(this, SearchPlaceActivity::class.java)
-        intent.putExtra(
-            SearchPlacesStatusCodes.CONFIG,
-            SearchPlaceActivity.Config(
-                apiKey = API_KEY,
-                searchBarTitle = "Enter Source Location",
-                location = "12.9716,77.5946",
-                enclosingRadius = "500"
-            )
+            SearchPlaceActivity.Config.Builder(apiKey = "PASS YOUR API KEY HERE")
+                .setSearchBarTitle("Enter Source Location")
+                .setMyLocation("12.9716,77.5946")
+                .setEnclosingRadius("500")
+                .build()
         )
 
 
@@ -69,6 +67,7 @@ For build version greater LOLLIPOP, you can use Activity Transition like this:
 	val pair = Pair.create(searchLocationET as View, SearchPlacesStatusCodes.PLACEHOLDER_TRANSITION)
 	val options = ActivityOptions.makeSceneTransitionAnimation(this, pair).toBundle()
 	startActivityForResult(intent, 700, options)
+	
 #Example Kotlin Class: 
 
     import com.oneclickaway.opensource.placeautocomplete.data.api.bean.place_details.PlaceDetails
@@ -90,11 +89,15 @@ For build version greater LOLLIPOP, you can use Activity Transition like this:
         searchLocationET = findViewById(R.id.searchLocationBTN)
         placeDetailsTV = findViewById(R.id.resultPlaceDetailsTV)
 
-        val intent = Intent(this, SearchPlaceActivity::class.java)
-        intent.putExtra(
-            SearchPlacesStatusCodes.CONFIG,
-            SearchPlaceActivity.Config(apiKey = API_KEY, searchBarTitle = "Enter Source Location")
-        )
+	 val intent = Intent(this, SearchPlaceActivity::class.java)
+		intent.putExtra(
+		    SearchPlacesStatusCodes.CONFIG,
+		    SearchPlaceActivity.Config.Builder(apiKey = API_KEY)
+			.setSearchBarTitle("Enter Source Location")
+			.setMyLocation("12.9716,77.5946")
+			.setEnclosingRadius("500")
+			.build()
+		)
 
         searchLocationET.setOnClickListener {
 
@@ -131,7 +134,7 @@ For build version greater LOLLIPOP, you can use Activity Transition like this:
    
 Usage
 -----
--Minimum sdk 15
+-Minimum sdk 15.<br />
 -Returns place information in onActivityResult
 
 License
