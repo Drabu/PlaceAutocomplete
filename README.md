@@ -27,7 +27,7 @@ This Kotlin Library is build with MVVM Archetecture and runs on top of RxJava 2.
 #2 Erase query with a close icon added to clear the text in the field.<br />
 #3 Keeps a record of Recent searches (Be Sure to add the dependency).<br />
 #4 Maintains recent searches in pretty time groups like Today, Yesterday, Earlier this week and previous searches.<br />
-
+#5 Internet connectivity and error handling also added wherever needed
 
 ## Dependencies
 

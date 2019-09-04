@@ -14,14 +14,12 @@ import android.widget.TextView
 import com.oneclickaway.opensource.placeautocomplete.data.api.bean.place_details.PlaceDetails
 import com.oneclickaway.opensource.placeautocomplete.ui.SearchPlaceActivity
 import com.oneclickaway.opensource.placeautocomplete.utils.SearchPlacesStatusCodes
-import java.util.*
 
 /** @author @buren ---> {Sample activity taht implements the feature}*/
 class ExampleLocationSearch : AppCompatActivity() {
 
     lateinit var searchLocationET: EditText
     lateinit var placeDetailsTV: TextView
-
 
     var API_KEY = BuildConfig.ApiKey
 
@@ -60,29 +58,6 @@ class ExampleLocationSearch : AppCompatActivity() {
 
         }
 
-
-        val calendarAlerts = Calendar.getInstance()
-        calendarAlerts.set(
-            calendarAlerts.get(Calendar.YEAR),
-            calendarAlerts.get(Calendar.DAY_OF_MONTH),
-            calendarAlerts.get(Calendar.DATE)
-        )
-
-
-        val currentTimeCalender = Calendar.getInstance()
-        currentTimeCalender.set(
-            currentTimeCalender.get(Calendar.YEAR),
-            currentTimeCalender.get(Calendar.DAY_OF_MONTH),
-            currentTimeCalender.get(Calendar.DATE),
-            0,
-            0,
-            0
-        )
-
-        val relativeTime =
-            ((calendarAlerts.timeInMillis - currentTimeCalender.timeInMillis) / 1000F) / 60F
-
-        placeDetailsTV.text = relativeTime.toString()
 
     }
 

@@ -207,18 +207,13 @@ class SearchPlaceActivity : AppCompatActivity(), SearchPlaces.PlaceItemSelectedL
                     searchProgressBar.visibility = View.VISIBLE
                     /*user is searching a random world*/
                     if (secondaryInformationLL.visibility == VISIBLE) {
-                        Log.d("VISIBLITY", "STATE_REFRESHING _ IF")
-//                        searchResultsRV.visibility = View.INVISIBLE
-//                        secondaryInformationLL.visibility = View.GONE
-
+                        /*STATE_REFRESHING */
                     } else {
-                        Log.d("VISIBLITY", "STATE_REFRESHING _ ELSE")
                         searchResultsRV.visibility = View.VISIBLE
                     }
                 }
 
                 STATE_COMPLETED -> {
-                    Log.d("VISIBLITY", "STATE_COMPLETED")
                     recentSearchesLL!!.visibility = GONE
                     searchResultsRV.visibility = View.VISIBLE
                     searchProgressBar.visibility = View.GONE
@@ -228,7 +223,6 @@ class SearchPlaceActivity : AppCompatActivity(), SearchPlaces.PlaceItemSelectedL
 
                 STATE_NO_INTERNET -> {
                     recentSearchesLL!!.visibility = GONE
-                    Log.d("VISIBLITY", "STATE_NO_INTERNET")
                     setSecondaryStateInformation(STATE_NO_INTERNET)
                 }
 
@@ -241,13 +235,11 @@ class SearchPlaceActivity : AppCompatActivity(), SearchPlaces.PlaceItemSelectedL
 
                 STATE_NO_RESULT -> {
                     recentSearchesLL!!.visibility = GONE
-                    Log.d("VISIBLITY", "STATE_NO_RESULT")
                     setSecondaryStateInformation(STATE_NO_RESULT)
 
                 }
 
                 STATE_IDLE -> {
-                    Log.d("VISIBLITY", "STATE_IDLE")
                     eraseCurrentEntryIV.visibility = GONE
                     searchResultsRV.visibility = GONE
                     searchProgressBar.visibility = GONE

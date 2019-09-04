@@ -6,21 +6,20 @@ import com.oneclickaway.opensource.placeautocomplete.utils.Commons.getPrettyTime
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ *@author Burhan ud din ---> Class is used to group the list of items in groups
+ */
 class GroupStrategy {
 
+    /**
+     *@author Burhan ud din ---> class used to keep time
+     */
     class TimeContainer(var nowTime: String, var timeInMilliseconds: Long) {
         override fun equals(other: Any?): Boolean {
             return if (other is TimeContainer) {
-                if (this.nowTime == other.nowTime) {
-                    Log.d("getHashMap", "equals: if")
-                    true
-                } else {
-                    Log.d("getHashMap", "equals: inner else")
-                    false
-                }
+                this.nowTime == other.nowTime
 
             } else {
-                Log.d("getHashMap", "equals: else")
                 false
             }
         }
@@ -61,6 +60,9 @@ class GroupStrategy {
         override fun getType(): Int = TYPE_GENERAL_ITEM
     }
 
+    /**
+     *@author Burhan ud din ---> Compares and sorts the list into group according to time
+     */
     class GroupComparator : Comparator<TimeContainer> {
         override fun compare(p0: TimeContainer?, p1: TimeContainer?): Int {
             return if (p0!!.timeInMilliseconds < p1!!.timeInMilliseconds) {
@@ -73,6 +75,9 @@ class GroupStrategy {
 
     }
 
+    /**
+     *@author Burhan ud din ---> method used to group the data by time
+     */
     fun groupDataByTime(myOption: List<SearchSelectedItem>): ArrayList<ListItem> {
 
         val consolidatedList = ArrayList<ListItem>()

@@ -7,11 +7,17 @@ import java.util.*
 
 object Commons {
 
+    /**
+     *@author Burhan ud din ---> tell you if the user is connected to the network
+     */
     fun isNetworkConnected(mContext: Context): Boolean {
         val cm = mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
         return cm!!.activeNetworkInfo != null
     }
 
+    /**
+     *@author Burhan ud din ---> Used to get pretty time from milliseconds
+     */
     fun getPrettyTime(milliSeconds: Long): String {
         val default = 0
 

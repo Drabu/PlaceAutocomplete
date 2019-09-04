@@ -49,6 +49,9 @@ class SearchPlacesRepo(var application: Application) {
     fun getLoadingPlaceManager(): LiveData<LoadingManager> = loadingPlaceManager
 
     private val recentSearchesManager = MutableLiveData<LoadingManager>()
+    /**
+     *@author Burhan ud din ---> gets the search manager to alter visibility
+     */
     fun getRecentSearchesManager(): LiveData<LoadingManager> = recentSearchesManager
 
     /*loading managers ends here*/
@@ -196,18 +199,15 @@ class SearchPlacesRepo(var application: Application) {
             .observeOn(Schedulers.io())
             .subscribe(object : DisposableObserver<Unit>() {
                 override fun onNext(t: Unit) {
-//                    Toast.makeText(application, "addSearchedItemToRecents: onNext", Toast.LENGTH_LONG).show()
                     Log.e(javaClass.simpleName, "addSearchedItemToRecents: onNext")
                 }
 
                 override fun onComplete() {
-//                    Toast.makeText(application, "addSearchedItemToRecents: Completed", Toast.LENGTH_LONG).show()
                     Log.e(javaClass.simpleName, "addSearchedItemToRecents: Completed")
                 }
 
 
                 override fun onError(e: Throwable) {
-//                    Toast.makeText(application, "addSearchedItemToRecents: Error", Toast.LENGTH_LONG).show()
                     Log.e(javaClass.simpleName, "addSearchedItemToRecents: Error")
                 }
 
