@@ -10,7 +10,7 @@ Google Places Api Implementation
 After Google came up with the update that Play Services version of the Places SDK for Android (in Google Play Services 16.0.0) is deprecated as of January 29, 2019, and will be turned off on July 29, 2019.
 which includes PlaceAutocompleteFragment also to be removed from the library.After getting this update from google we had to immediately migrate to an alternative where we ended up creating this library,  PlaceAutocompleteFragment  provides you with an elegant user interface to choose a location and works the exact same as PlaceAutocompleteFragment .
 
-## Features
+### Features
 Custom title message for the view.
 
 Sorted places based on your location provided you pass your location.

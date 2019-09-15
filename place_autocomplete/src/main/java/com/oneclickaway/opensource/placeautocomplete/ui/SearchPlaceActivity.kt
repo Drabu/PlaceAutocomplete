@@ -333,7 +333,7 @@ class SearchPlaceActivity : AppCompatActivity(), SearchPlaces.PlaceItemSelectedL
 
         liveQueryInEditText.observe(this, Observer {
 
-            if (it?.isNotEmpty()!!) {
+            if (it != null && it.isNotEmpty()) {
                 eraseCurrentEntryIV.visibility = VISIBLE
             } else {
                 eraseCurrentEntryIV.visibility = GONE
@@ -367,6 +367,7 @@ class SearchPlaceActivity : AppCompatActivity(), SearchPlaces.PlaceItemSelectedL
             .subscribeOn(Schedulers.io())
             .subscribeWith(object : DisposableObserver<CharSequence?>() {
                 override fun onComplete() {
+                    print("Completed")
                 }
 
                 override fun onNext(t: CharSequence) {
@@ -383,7 +384,7 @@ class SearchPlaceActivity : AppCompatActivity(), SearchPlaces.PlaceItemSelectedL
                 }
 
                 override fun onError(e: Throwable) {
-
+                    e.printStackTrace()
                 }
 
             })
