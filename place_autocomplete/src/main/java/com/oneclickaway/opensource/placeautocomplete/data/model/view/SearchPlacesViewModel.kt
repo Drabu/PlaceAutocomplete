@@ -32,17 +32,22 @@ class SearchPlacesViewModel(private val applicationContext: Application) :
     /** @author @buren ---> {micro-service used to get live data stream of place details}*/
     fun getPlaceDetailsLiveDataStream() = searchPlacesRepo.getPlaceDetailsLiveDataStream()
 
+    /** @author @buren ---> {prediction manager}*/
     fun getLoadingPredictionManager(): LiveData<LoadingManager> =
         searchPlacesRepo.getLoadingPredictionManager()
 
+    /** @author @buren ---> {places Manager}*/
     fun getLoadingPlaceManager(): LiveData<LoadingManager> = searchPlacesRepo.getLoadingPlaceManager()
 
+    /** @author @buren ---> {Searches manager}*/
     fun getRecentSearchesManager(): LiveData<LoadingManager> =
         searchPlacesRepo.getRecentSearchesManager()
 
+    /** @author @buren ---> {Search data}*/
     fun getRecentSearchesData(): LiveData<List<SearchSelectedItem>> =
         searchPlacesRepo.getRecentSearches()
 
+    /** @author @buren ---> {recent searches}*/
     fun requestListOfRecentSearches() =
         searchPlacesRepo.requestListOfRecentSearches(applicationContext)
 

@@ -43,6 +43,9 @@ class GroupStrategy {
             const val TYPE_GENERAL_ITEM = 102
         }
 
+        /**
+         *@author Burhan ud din ---> Type of item
+         */
         abstract fun getType(): Int
 
     }

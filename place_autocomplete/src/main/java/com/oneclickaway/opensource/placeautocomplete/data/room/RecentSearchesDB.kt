@@ -21,6 +21,9 @@ abstract class RecentSearchesDB : RoomDatabase() {
 
         var INSTANCE: RecentSearchesDB? = null
 
+        /**
+         *@author Burhan ud din ---> Gets the instance of database
+         */
         fun getInstance(context: Context): RecentSearchesDB? {
 
             if (INSTANCE == null) {

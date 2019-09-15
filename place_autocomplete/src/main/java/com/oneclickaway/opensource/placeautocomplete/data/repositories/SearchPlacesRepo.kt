@@ -46,6 +46,9 @@ class SearchPlacesRepo(var application: Application) {
     fun getLoadingPredictionManager(): LiveData<LoadingManager> = loadingPredictionManager
 
     private val loadingPlaceManager = MutableLiveData<LoadingManager>()
+    /**
+     *@author Burhan ud din ---> Loading place manager
+     */
     fun getLoadingPlaceManager(): LiveData<LoadingManager> = loadingPlaceManager
 
     private val recentSearchesManager = MutableLiveData<LoadingManager>()
@@ -183,8 +186,6 @@ class SearchPlacesRepo(var application: Application) {
     }
 
     fun addSearchedItemToRecents(it: PlaceDetails) {
-
-//        Toast.makeText(application, "adddng", Toast.LENGTH_LONG).show()
         Observable.fromCallable {
             initDb()?.repDao()?.addSearchItem(
                 SearchSelectedItem(

@@ -9,6 +9,9 @@ import com.oneclickaway.opensource.placeautocomplete.R
 import com.oneclickaway.opensource.placeautocomplete.interfaces.SearchPlaces
 import com.oneclickaway.opensource.placeautocomplete.utils.GroupStrategy
 
+/**
+ *@author Burhan ud din ---> Search adapter
+ */
 class RecentSearchesAdapter(
     val listSearchSelectedItem: List<GroupStrategy.ListItem>,
     var recentOnItemItemSelectedListener: SearchPlaces.RecentItemSelectedListener
@@ -100,6 +103,9 @@ class RecentSearchesAdapter(
         return listSearchSelectedItem.size
     }
 
+    /**
+     *@author Burhan ud din ---> Data view holder
+     */
     inner class DateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         lateinit var groupTitleTV: TextView
@@ -114,6 +120,9 @@ class RecentSearchesAdapter(
     }
 
 
+    /**
+     *@author Burhan ud din ---> document holder
+     */
     inner class GeneralItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 

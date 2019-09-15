@@ -435,16 +435,25 @@ class SearchPlaceActivity : AppCompatActivity(), SearchPlaces.PlaceItemSelectedL
             var enclosingRadius: String = ""
             var searchBarTitle: String = "Enter Location"
 
+            /**
+             *@author Burhan ud din ---> Set location in lat, lng which sorts location resulsts based on your lcoation
+             */
             fun setMyLocation(location: String): Builder {
                 this.location = location
                 return this
             }
 
+            /**
+             *@author Burhan ud din ---> enclosing radius
+             */
             fun setEnclosingRadius(enclosingRadius: String): Builder {
                 this.enclosingRadius = enclosingRadius
                 return this
             }
 
+            /**
+             *@author Burhan ud din ---> Title of the bar
+             */
             fun setSearchBarTitle(searchBarTitle: String): Builder {
                 this.searchBarTitle = searchBarTitle
                 return this
