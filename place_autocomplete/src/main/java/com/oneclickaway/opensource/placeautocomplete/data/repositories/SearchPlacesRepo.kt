@@ -43,6 +43,9 @@ class SearchPlacesRepo(var application: Application) {
     /*Loading managers are mentioned here*/
 
     private val loadingPredictionManager = MutableLiveData<LoadingManager>()
+    /**
+     *@author Burhan ud din ---> Loading prection manager
+     */
     fun getLoadingPredictionManager(): LiveData<LoadingManager> = loadingPredictionManager
 
     private val loadingPlaceManager = MutableLiveData<LoadingManager>()

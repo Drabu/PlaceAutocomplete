@@ -24,7 +24,7 @@ class SearchResultAdapter(
             binding = LayoutInflater.from(p0.context).inflate(R.layout.search_result_row, p0, false)
         )
 
-    override fun getItemCount(): Int = listOfCandidatesItem!!.size
+    override fun getItemCount(): Int = listOfCandidatesItem?.size!!
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 

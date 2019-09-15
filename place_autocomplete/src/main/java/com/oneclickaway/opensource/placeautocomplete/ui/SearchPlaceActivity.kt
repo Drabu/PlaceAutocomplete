@@ -459,6 +459,9 @@ class SearchPlaceActivity : AppCompatActivity(), SearchPlaces.PlaceItemSelectedL
                 return this
             }
 
+            /**
+             *@author Burhan ud din ---> Build the object
+             */
             fun build(): Config {
                 return Config(
                     apiKey = apiKey,

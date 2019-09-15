@@ -36,6 +36,9 @@ class GroupStrategy {
 
     }
 
+    /**
+     *@author Burhan ud din ---> Liste item in recent search
+     */
     abstract class ListItem {
 
         companion object {
@@ -50,6 +53,9 @@ class GroupStrategy {
 
     }
 
+    /**
+     *@author Burhan ud din ---> date item in list item
+     */
     class DateItem : ListItem() {
 
         lateinit var date: String

@@ -4,7 +4,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import java.util.*
 
-
+/**
+ *@author Burhan ud din ---> Common utilities
+ */
 object Commons {
 
     /**

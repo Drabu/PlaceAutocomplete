@@ -44,7 +44,7 @@ class ExampleLocationSearch : AppCompatActivity() {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 val pair = Pair.create(
-                    searchLocationET as View,
+                    (searchLocationET as? View),
                     SearchPlacesStatusCodes.PLACEHOLDER_TRANSITION
                 )
                 val options = ActivityOptions.makeSceneTransitionAnimation(this, pair).toBundle()

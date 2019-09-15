@@ -6,6 +6,9 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.oneclickaway.opensource.placeautocomplete.data.model.room.SearchSelectedItem
 
+/**
+ *@author Burhan ud din ---> Data access Object
+ */
 @Dao
 interface RecentSearchesDAO {
 
