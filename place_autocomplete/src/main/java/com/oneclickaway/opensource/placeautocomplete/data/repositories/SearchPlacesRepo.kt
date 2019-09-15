@@ -93,7 +93,7 @@ class SearchPlacesRepo(var application: Application) {
             radius = radius
         )
             .filter {
-                if (it.predictions?.isEmpty()!!) {
+                if (it.predictions != null && it.predictions.isEmpty()) {
                     loadingPredictionManager.postValue(LoadingManager.STATE_NO_RESULT)
                     return@filter false
                 } else {
@@ -147,7 +147,7 @@ class SearchPlacesRepo(var application: Application) {
 
                 override fun onNext(it: PlaceDetails) {
                     placeDetails.postValue(it)
-                    addSearchedItemToRecents(it)
+                    addSearchedItemToRecent(it)
 
 
                 }
@@ -175,7 +175,7 @@ class SearchPlacesRepo(var application: Application) {
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
             .subscribe {
-                if (it?.isEmpty()!!) {
+                if (it != null && it.isEmpty()) {
                     recentSearchesManager.postValue(LoadingManager.STATE_NO_RESULT)
                 } else {
                     recentSearchesManager.postValue(LoadingManager.STATE_COMPLETED)
@@ -188,13 +188,16 @@ class SearchPlacesRepo(var application: Application) {
 
     }
 
-    fun addSearchedItemToRecents(it: PlaceDetails) {
+    /**
+     *@author Burhan ud din ---> Adding item to recent dearch
+     */
+    fun addSearchedItemToRecent(it: PlaceDetails) {
         Observable.fromCallable {
             initDb()?.repDao()?.addSearchItem(
                 SearchSelectedItem(
-                    placeId = it.placeId!!,
-                    mainText = it.name!!,
-                    secondaryText = it.formattedAddress!!,
+                    placeId = it.placeId.toString(),
+                    mainText = it.name.toString(),
+                    secondaryText = it.formattedAddress.toString(),
                     searchCurrentMilliseconds = System.currentTimeMillis()
                 )
             )
@@ -203,16 +206,16 @@ class SearchPlacesRepo(var application: Application) {
             .observeOn(Schedulers.io())
             .subscribe(object : DisposableObserver<Unit>() {
                 override fun onNext(t: Unit) {
-                    Log.e(javaClass.simpleName, "addSearchedItemToRecents: onNext")
+                    Log.e(javaClass.simpleName, "addSearchedItemToRecent: onNext")
                 }
 
                 override fun onComplete() {
-                    Log.e(javaClass.simpleName, "addSearchedItemToRecents: Completed")
+                    Log.e(javaClass.simpleName, "addSearchedItemToRecent: Completed")
                 }
 
 
                 override fun onError(e: Throwable) {
-                    Log.e(javaClass.simpleName, "addSearchedItemToRecents: Error")
+                    Log.e(javaClass.simpleName, "addSearchedItemToRecent: Error")
                 }
 
             })
